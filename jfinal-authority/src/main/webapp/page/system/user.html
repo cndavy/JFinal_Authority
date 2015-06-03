@@ -1,0 +1,231 @@
+@ var head ={
+<title>用户管理</title>
+@}; var ctrls= "ng-controller='UserCtrls'" ; var body={
+
+@if( so.hasPermission("/system/user/add")) {
+<div ng-model="so_add" ng-init="so_add=true"></div>
+@}if( so.hasPermission("/system/user/edit")) {
+<div ng-model="so_edit" ng-init="so_edit=true"></div>
+@}if( so.hasPermission("/system/user/delete")) {
+<div ng-model="so_delete" ng-init="so_delete=true"></div>
+@}if( so.hasPermission("/system/user/batchGrant")) {
+<div ng-model="so_batchGrant" ng-init="so_batchGrant=true"></div>
+@}if( so.hasPermission("/system/user/batchDelete")) {
+<div ng-model="so_batchDelete" ng-init="so_batchDelete=true"></div>
+@}if( so.hasPermission("/system/user/serach")) {
+<div ng-model="so_serach" ng-init="so_serach=true"></div>
+@}
+
+
+<div class="easyui-layout" data-options="fit : true,border : false">
+	<div data-options="region:'north',title:'查询条件',border:false" style="height: 100px; overflow: hidden;">
+		<form id="searchForm">
+			<table class="table table-hover table-condensed" style="display: none;">
+				<tr>
+					<th>登录名</th>
+					<td><input name="name" placeholder="可以模糊查询登录名" /></td>
+					<th>状态</th>
+					<td><select class="easyui-combobox" name="status" editable="false">
+							<option value="1">正常
+							<option value="2">冻结
+					</select></td>
+				</tr>
+				<tr>
+					<th>创建时间</th>
+					<td><input name="dateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" />至 <input
+						name="dateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" readonly="readonly" /></td>
+
+					<th>角色</th>
+					<td><select class="easyui-combotree" name="role.id-i" editable="false"
+						data-options="url :'${CONTEXT_PATH}/system/role/tree',
+			              parentField : 'pid',
+			              lines : true">
+					</select></td>
+
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div data-options="region:'center',border:false">
+		<table id="dg"></table>
+	</div>
+</div>
+<div id="toolbar" style="display: none;">
+	<a ng-show="so_add" ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a> <a
+		ng-show="so_batchGrant" " ng-click="batchGrantFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'tux'">批量授权</a> <a
+		ng-show="so_batchDelete" ng-click="batchDeleteFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'delete'">批量删除</a>
+	<a ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">过滤条件</a> <a
+		ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清空条件</a>
+
+</div>
+
+<div id="menu" class="easyui-menu" style="width: 120px; display: none;">
+     	<a ng-show="so_add" ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a>
+		<div  ng-show="so_delete" ng-click="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
+		<div  ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'">编辑</div>
+</div>
+
+<!--  dialog -->
+<div id="dlg" class="easyui-dialog" style="width: 450px; height: 350px; padding: 5px 10px" closed="true" buttons="#dlg-buttons"
+	data-options="resizable:true,modal:true,maximizable:true,minimizable:true,inline:false">
+
+	<div class="easyui-layout" data-options="fit:true,border:false">
+		<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+			<form id="fm" method="post">
+				<input name="user.id" type="hidden"> <input name="user.icon" type="hidden">
+				<table class="table table-hover table-condensed">
+					<tr>
+						<th>登录名称</th>
+						<td><input name="user.name" id="username" type="text" placeholder="请输入登录名称" class="easyui-validatebox span2" data-options="required:true" value=""></td>
+					</tr>
+					<tr>
+						<th>上传头像</th>
+						<td><img src="" id="icon" style="width: 48px; height: 48px"> <a href="javascript:void(0)" style="margin-left: 40px" class="easyui-linkbutton"
+							onclick="showDialog('#dlg-img','设置头像');">选择图片</a></td>
+					</tr>
+					<tr>
+						<th>email</th>
+						<td><input name="user.email" id="email" type="text" placeholder="请输入email" class="easyui-validatebox span2" data-options=" validType:'email'"></td>
+					</tr>
+					<tr>
+						<th>描述</th>
+						<td><textarea rows="4" cols="8" name="user.des" id="des"></textarea></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons">
+	<a href="javascript:void(0)" class="easyui-linkbutton" ng-click="submit('#fm','#dlg')">确定</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton"
+		onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+
+
+
+<div id="dlg-grant" class="easyui-dialog" style="width: 340px; height: 150px; padding: 5px 10px" closed="true" buttons="#dlg-buttons-grant"
+	data-options="resizable:true,modal:true">
+
+	<div class="easyui-layout" data-options="fit:true,border:false">
+		<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+			<form id="fm2" method="post">
+				<input id="ids" name="ids" type="hidden" class="span2">
+				<input name="user.id" type="hidden" class="span2">
+				<table class="table table-hover table-condensed">
+					<tr>
+						<th>所属角色</th>
+						<td><select id="role_ids" name="role_ids" style="width: 140px; height: 29px;"></select><img
+							src="${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cut_red.png" onclick="$('#role_ids').combotree('clear');" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons-grant">
+	<a href="javascript:void(0)" class="easyui-linkbutton" ng-click="submit('#fm2','#dlg-grant')">确定</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton"	onclick="javascript:$('#dlg-grant').dialog('close')">取消</a>
+</div>
+
+
+<div id="dlg-pwd" class="easyui-dialog" style="width: 300px; height: 250px; padding: 5px 10px" closed="true" buttons="#dlg-buttons-pwd"
+	data-options="resizable:true,modal:true">
+	<div class="easyui-layout" data-options="fit:true,border:false">
+		<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+			<form id="fm3" method="post">
+				<table class="table table-hover table-condensed">
+					<tr>
+						<th>编号</th>
+						<td><input name="user.id" type="text" class="span2" readonly="readonly"></td>
+
+					</tr>
+					<tr>
+						<th>密码</th>
+						<td><input name="user.pwd" id="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox span2" data-options="required:true"></td>
+					</tr>
+					<tr>
+						<th>确认密码</th>
+						<td><input name="repwd" type="password" placeholder="请输入密码" class="easyui-validatebox span2" validType="same['pwd']" data-options="required:true"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="dlg-buttons-pwd">
+	<a href="javascript:void(0)" class="easyui-linkbutton" ng-click="submit('#fm3','#dlg-pwd')">确定</a>
+	 <a href="javascript:void(0)" class="easyui-linkbutton"
+		onclick="javascript:$('#dlg-pwd').dialog('close')">取消</a>
+</div>
+
+
+
+<div id="dlg-img" class="easyui-dialog" style="width: 680px; height: 500px; padding: 5px 10px" closed="true"
+	 data-options="resizable:true,modal:true,maximizable:true,minimizable:true">
+
+	<div id="altContent">
+
+		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"
+			WIDTH="650" HEIGHT="450" id="myMovieName">
+			<PARAM NAME=movie VALUE="avatar.swf">
+			<PARAM NAME=quality VALUE=high>
+			<PARAM NAME=bgcolor VALUE=#FFFFFF>
+			<param name="flashvars" value="imgUrl=${CONTEXT_PATH}/static/images/a.jpg&uploadUrl=${CONTEXT_PATH}/common/file/flashUpload&uploadSrc=false" />
+			<EMBED src="${CONTEXT_PATH}/static/js/upload/avatar.swf" quality=high bgcolor=#FFFFFF WIDTH="650" HEIGHT="450" wmode="transparent"
+				flashVars="imgUrl=${CONTEXT_PATH}/static/images/a.jpg&uploadUrl=${CONTEXT_PATH}/common/file/flashUpload&uploadSrc=false" NAME="myMovieName" ALIGN=""
+				TYPE="application/x-shockwave-flash" allowScriptAccess="always" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+			</EMBED>
+		</object>
+	</div>
+	<div id="avatar_priview"></div>
+
+</div>
+@}; var js={
+
+
+<script type="text/javascript">
+
+var uploadevent=function(status, picUrl, callbackdata) {
+		//alert(callbackdata);
+	status += '';
+	switch (status) {
+	case '1':
+		var time = new Date().getTime();
+		var filename48 = picUrl + '_48.jpg';
+		var path= filename48+ "?"+ time;
+		 $('#dlg-img').dialog('close'); 
+		 $('#icon').attr('src',path);
+		 
+		 $("input[name='user.icon']").val(filename48);
+		break;
+	case '0':
+		window.location.reload();
+		break;
+	}
+};
+
+
+var formatterFun = function(value, row, index) {
+		var str = '';
+
+@if( so.hasPermission("/system/user/edit")) 
+		str += $.formatString('<img style="float:left;" onclick="$(this).scope().editFun(\'{0}\');" src="{1}" title="编辑"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/pencil.png');
+@if( so.hasPermission("/system/user/grant")) 
+		str += $.formatString('<img style="float:left;" onclick="$(this).scope().grant(\'{0}\');" src="{1}" title="授权"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/key.png');
+@if( so.hasPermission("/system/user/pwd")) 
+		str += $.formatString('<img style="float:left;" onclick="$(this).scope().pwd(\'{0}\');" src="{1}" title="修改密码"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/key_add.png');
+@if( so.hasPermission("/system/user/freeze")) 
+		str += $.formatString('<img style="float:left;" onclick="$(this).scope().freeze(\'{0}\',\'{1}\');" src="{2}" title="冻结"/>',row.id, row.status,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/lock/lock.png');
+@if( so.hasPermission("/system/user/delete")) 
+		str += $.formatString('<img style="float:left;" onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="删除"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cancel.png');
+@
+		return str + '';
+	}
+</script>
+
+<script src="${CONTEXT_PATH}/static/app/ctrls/user-ctrls.js" type="text/javascript"></script>
+
+
+@}; include("../layout/_layout.html",{head:head,body:body,js:js,ctrls:ctrls}){}
+

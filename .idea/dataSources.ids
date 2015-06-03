@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="Oracle - htc@48.0.191.161" uuid="40f51503-7ecd-4539-82a1-d5195076a8af">
+    <database-info product="Oracle" version="Oracle Database 10g Enterprise Edition Release 10.1.0.2.0 - Production&#xa;With the Partitioning, Oracle Label Security, OLAP and Data Mining options" jdbc-version="11.2" driver-name="Oracle JDBC driver" driver-version="11.2.0.3.0">
+      <extra-name-characters>$#</extra-name-characters>
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
+  </data-source>
+  <data-source name="MySQL - han@localhost" uuid="b9123b47-296c-409e-9e82-717f1f786d99">
+    <database-info product="MySQL" version="5.6.24" jdbc-version="4.0" driver-name="MySQL-AB JDBC Driver" driver-version="mysql-connector-java-5.1.20 ( Revision: tonci.grgin@oracle.com-20111003110438-qfydx066wsbydkbw )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="han"/>
+    <table name="index_msg" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="msg" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="uid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="55WZ6KiA55So5oi3IHN5c3RlbV91c2Vy"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="index_msg_ibfk_1" columns="uid" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="FK_SYSTEM_MSG" unique="false" columns="uid"/>
+    </table>
+    <table name="project" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="createdate" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="modifydate" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="des" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="unique_id" unique="true" columns="id"/>
+    </table>
+    <table name="system_bug" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="111" scale="0" nullable="true" jdbcType="12"/>
+      <column name="des" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" remarks="57G75Yir"/>
+      <column name="createdate" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="modifydate" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ==" remarks="MS7lvoXop6PlhrMgMi4g5bey5aSE55CGIDMu5b+955Wl"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="system_log" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="uid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="operation" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA==" remarks="MS7orr/pl64gMiDnmbvlvZUgMy7mt7vliqAgNC4g57yW6L6RIDUuIOWIoOmZpA=="/>
+      <column name="from" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" remarks="5p2l5rqQIHVybA=="/>
+      <column name="ip" sqlType="VARCHAR" precision="22" scale="0" nullable="true" jdbcType="12"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="system_log_ibfk_1" columns="uid" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="FK_SYSTEM_EVENT" unique="false" columns="uid"/>
+    </table>
+    <table name="system_res" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="pid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="111" scale="0" nullable="true" jdbcType="12"/>
+      <column name="des" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="iconCls" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" def="J3dyZW5jaCc="/>
+      <column name="seq" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="Mg==" remarks="MSDlip/og70gMiDmnYPpmZA="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="system_role_res_ibfk_1" table="system_role_res" schema="" catalog="han" columns="res_id"/>
+    </table>
+    <table name="system_role" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="55" scale="0" nullable="true" jdbcType="12"/>
+      <column name="des" sqlType="VARCHAR" precision="55" scale="0" nullable="true" jdbcType="12"/>
+      <column name="seq" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="iconCls" sqlType="VARCHAR" precision="55" scale="0" nullable="true" jdbcType="12" def="J3N0YXR1c19vbmxpbmUn"/>
+      <column name="pid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="system_role_res_ibfk_2" table="system_role_res" schema="" catalog="han" columns="role_id"/>
+      <exported-key name="system_user_role_ibfk_1" table="system_user_role" schema="" catalog="han" columns="role_id"/>
+    </table>
+    <table name="system_role_res" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="res_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="role_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="system_role_res_ibfk_1" columns="res_id" ref-table="system_res" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="system_role_res_ibfk_2" columns="role_id" ref-table="system_role" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="FK_SYSTEM_ROLE_RES_RES_ID" unique="false" columns="res_id"/>
+      <index name="FK_SYSTEM_ROLE_RES_ROLE_ID" unique="false" columns="role_id"/>
+    </table>
+    <table name="system_user" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="55" scale="0" nullable="true" jdbcType="12"/>
+      <column name="pwd" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="des" sqlType="VARCHAR" precision="55" scale="0" nullable="true" jdbcType="12"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ==" remarks="IzEg5LiN5Zyo57q/IDIu5bCB5Y+354q25oCBIA=="/>
+      <column name="icon" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" def="Jy9pbWFnZXMvZ3Vlc3QuanBnJw=="/>
+      <column name="email" sqlType="VARCHAR" precision="222" scale="0" nullable="true" jdbcType="12"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="index_msg_ibfk_1" table="index_msg" schema="" catalog="han" columns="uid"/>
+      <exported-key name="system_log_ibfk_1" table="system_log" schema="" catalog="han" columns="uid"/>
+      <exported-key name="system_user_role_ibfk_2" table="system_user_role" schema="" catalog="han" columns="user_id"/>
+    </table>
+    <table name="system_user_role" schema="" catalog="han" type="TABLE">
+      <column name="int" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="role_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="int"/>
+      <foreign-key name="system_user_role_ibfk_1" columns="role_id" ref-table="system_role" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="system_user_role_ibfk_2" columns="user_id" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="FK_SYSTME_USER_ROLE_USER_ID" unique="false" columns="user_id"/>
+      <index name="FK_SYSTME_USER_ROLE_ROLE_ID" unique="false" columns="role_id"/>
+    </table>
+  </data-source>
+</component>

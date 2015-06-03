@@ -1,0 +1,37 @@
+
+# 约定
+
+
+项目本身的 很多 方便的功能 基于 约定
+
+
+比如 全部用注解 绑定Controller 和 Model
+
+数据库名 和 controller 路径名都是 一样的
+
+@ControllerBind注解 设置 viewpath 来 自动 转发到index
+如果没有 设置 就重写这个方法 
+
+@TableBind 注解 的key  默认也为 cache 名称 
+
+
+Form 的sql 自动生成 也基于约定
+
+manytomany 
+
+onetomany 等
+
+
+通过  url 后的 - 参数名来自动 生成 where 条件
+-s  String类型
+-i  int 类型
+-*  like 
+-in  in 语句 
+-nin not in 语句
+
+
+
+
+
+
+

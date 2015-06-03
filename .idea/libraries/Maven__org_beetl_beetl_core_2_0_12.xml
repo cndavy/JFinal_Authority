@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Maven: org.beetl:beetl-core:2.0.12">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/beetl/beetl-core/2.0.12/beetl-core-2.0.12.jar!/" />
+    </CLASSES>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/beetl/beetl-core/2.0.12/beetl-core-2.0.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

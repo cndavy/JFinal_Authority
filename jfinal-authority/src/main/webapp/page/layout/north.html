@@ -1,0 +1,26 @@
+<link href="${CONTEXT_PATH}/static/js/jquery.weather/images/default/julying-weather.css" rel="stylesheet" type="text/css">
+<link href="${CONTEXT_PATH}/static/js/jquery.weather/css/main.css" rel="stylesheet" type="text/css">
+
+<div id="debug"  style="float:right;height:200px  width:300px; margin-right:300px;  position:relative; z-index: 1"></div> 
+
+<div style="position: absolute; right: 30px; bottom: 0px;">
+	 <a href="javascript:void(0);"  id="btn_skin">更换皮肤</a> 
+     <a href="javascript:void(0);" id="btn_logout">注销</a>
+</div>
+<div data-options="" class="layout-button-up" style="position: absolute; right: 00px; bottom: 0px;">
+	<a href="javascript:void(0);"   id="btn_coll" onclick=" $('#index_layout').layout('collapse','north');"></a>
+
+</div>
+<div id="layout_north_pfMenu" style="width: 150px; display: none;">
+	<div ng-click="changeThemeFun('default');" title="default">default</div>
+	<div ng-click="changeThemeFun('gray');" title="gray">gray</div>
+	<div ng-click="changeThemeFun('metro');" title="metro">metro</div>
+	<div ng-click="changeThemeFun('bootstrap');" title="bootstrap">bootstrap</div>
+	<div ng-click="changeThemeFun('black');" title="black">black</div>
+</div>
+<div id="layout_north_zxMenu" style="width: 100px; display: none;">
+	<div ng-click="logout();">重新登录</div>
+	<div ng-click="logout();">退出系统</div>
+</div>
+
+<div ng-init="init_north()"></div> 

@@ -1,0 +1,21 @@
+
+
+<!-- 复杂的 sql 写在 这里  简单的 直接 拼接了    -->
+<sqlGroup name="index">
+
+	<sqlGroup name="msg">
+	    
+	    <sql id="list">SELECT index_msg.msg,index_msg.uid, DATE_FORMAT(index_msg.date,"%m-%d %h:%i:%s")as date , system_user.name,system_user.icon  FROM `index_msg` JOIN  system_user  on system_user.id = index_msg.uid  ORDER BY date desc limit 5;</sql>
+	    
+	</sqlGroup>
+
+
+</sqlGroup>
+
+
+
+
+
+
+
+

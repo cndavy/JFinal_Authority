@@ -1,0 +1,55 @@
+项目启动步骤
+
+导入项目 一定要使用 import->General-> Existing Project into workspace
+不要使用 导入maven 项目的方式 不然会出现莫名其妙的问题
+
+1 使用db.sql 中的 sql 语句创建数据库与数据库表
+
+2  修改 db.txt 文件，填入正确的数据库连接用户名、密码 
+
+            密码不加密的话  修改配置  decrypt=false
+
+              可以手动在数据库建个 新账户
+
+3 使用maven 部署 先install jbase  最后安装 jfinal-authority
+
+4 使用tomcat 或者  jetty 启动项目 jetty 找不到 网页路径的话修改 一下 beetl.beetl.properties 修改 RESOURCE.root= /src/main/webapp/
+
+
+#注意  用tomcat运行 有的eclipse 需要 close  jbase项目才能运行 
+ 
+ 
+ 建议使用 eclipse-for EE 运行 
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 

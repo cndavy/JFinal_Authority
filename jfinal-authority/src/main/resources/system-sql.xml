@@ -1,0 +1,40 @@
+
+
+<!-- 复杂的 sql 写在 这里  简单的 直接 拼接了    -->
+<sqlGroup name="system">
+
+	<sqlGroup name="res">
+	
+		<sql id="getUrls">select url from system_res where url is not null and pid !=0</sql>
+		<sql id="getResUrl"> SELECT res.url FROM system_res AS res inner JOIN system_role_res role_res ON role_res.res_id = res.id INNER JOIN system_role AS role ON role.id = role_res.role_id where role.name=? and res.url is not null and res.pid != 0</sql>
+		<sql id="getRes"> SELECT res.* FROM system_res AS res inner JOIN system_role_res role_res ON role_res.res_id = res.id INNER JOIN system_role AS role ON role.id = role_res.role_id where role.id=?</sql>
+	   	
+	</sqlGroup>
+	
+	<sqlGroup name="role">
+	    <sql id="list">select role.*, p.name as pname from system_role as role left join system_role p  on role.pid=p.id</sql>
+		<sql id="getRole"> select role.* from system_user as u join   system_user_role as user_role   on  u.id = user_role.user_id join   system_role as role on role.id= user_role.role_id  where   u.id=?</sql>
+		<sql id="getRolesName">select role.name from system_user as u join system_user_role as user_role on u.id = user_role.user_id  join system_role as role on role.id= user_role.role_id   where u.name=?</sql>
+	</sqlGroup>
+
+	<sqlGroup name="user">
+	    <sql id="list">select DISTINCT  system_user.* from system_user left join system_user_role as user_role on user_role.user_id =system_user.id left join system_role as role on role.id = user_role.role_id </sql>
+	</sqlGroup>
+	
+	<sqlGroup name="log">
+	    <sql id="list">SELECT system_log.*,system_user.name as user_name FROM `system_log` left join system_user   on  system_user.id = system_log.uid </sql>
+	    <sql id="chart">SELECT count(*) as count ,DATE_FORMAT(date,'%m-%d') as date FROM `system_log` </sql>
+	    <sql id="getVisitCount">SELECT count(*) as count ,DATE_FORMAT(date,'%m-%d') as date FROM `system_log` where operation=1  GROUP BY DATE_FORMAT(date,'%Y-%m-%d') ORDER BY date desc limit 7</sql>
+	    <sql id="getLoginCount">SELECT count(*) as count ,DATE_FORMAT(date,'%m-%d') as date FROM `system_log` where operation=2  GROUP BY DATE_FORMAT(date,'%Y-%m-%d') ORDER BY date desc limit 7</sql>
+	    
+	</sqlGroup>
+
+</sqlGroup>
+
+
+
+
+
+
+
+

@@ -1,0 +1,88 @@
+@ var head={
+<title>角色管理</title>
+@}; var ctrls= "ng-controller='RoleCtrls'" ; var body={
+
+@if( so.hasPermission("/system/role/add")) {
+  <div  ng-model="so_add" ng-init="so_add=true"></div>
+@}if( so.hasPermission("/system/role/edit")) {
+  <div  ng-model="so_edit" ng-init="so_edit=true"></div>
+@}if( so.hasPermission("/system/role/delete")) {
+  <div  ng-model="so_delete" ng-init="so_delete=true"></div>
+@}
+
+<div class="easyui-layout" data-options="fit : true,border : false">
+		<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+			<table id="treeGrid"></table>
+		</div>
+	</div>
+	<div id="toolbar" style="display: none;">
+	 <a  ng-show="so_add"  ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a>
+		<a onclick="tgredo(treeGrid);" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'resultset_next'">展开</a>
+		 <a onclick="tgundo(treeGrid);" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'resultset_previous'">折叠</a> 
+		 <a onclick="treeGrid.treegrid('reload');" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'transmit'">刷新</a>
+	</div>
+
+	<div id="menu" class="easyui-menu" style="width: 120px; display: none;">
+
+			<div ng-show="so_add" ng-click="addFun();" data-options="iconCls:'pencil_add'">增加</div>
+			<div ng-show="so_delete" ng-click="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
+			<div ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'">编辑</div>
+	</div>
+	
+		
+	<!--  dialog -->
+	 <div id="dlg"   class="easyui-dialog" style=" width:540px;height:300px;padding:5px 10px" closed="true" buttons="#dlg-buttons"  data-options= "resizable:true,modal:true">
+	<div class="easyui-layout" data-options="fit:true,border:false">
+	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+		<form id="fm" method="post">
+			<input name="role.id" type="hidden"   class="span2" value="" > 
+			<table class="table table-hover table-condensed">
+				<tr>
+					<th>角色名称</th>
+					<td colspan="3"><input name="role.name" type="text" placeholder="请输入角色名称" class="easyui-validatebox span2" data-options="required:true" value=""></td>
+				</tr>
+				<tr>
+					<th>排序</th>
+					<td><input name="role.seq" value="100" class="easyui-numberspinner" style="width: 140px; height: 29px;" required="required" data-options="editable:false"></td>
+					<th>上级角色</th>
+					<td><select id="pid" name="role.pid" style="width: 140px; height: 29px;">
+					</select><img src="${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cut_red.png" onclick="$('#pid').combotree('clear');" /></td>
+				</tr>
+				<tr>
+					<th>备注</th>
+					<td colspan="3"><textarea name="role.des" rows="" cols="" class="span5"></textarea></td>
+				</tr>
+			</table>
+	 	 </form>
+	    </div>
+        </div>
+	</div>
+	    <div id="dlg-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="submit()">确定</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg').dialog('close')">取消</a>
+    </div>
+</div>     
+	
+@};var js={
+<script type="text/javascript">
+var formatterFun =function(value, row, index) {
+	var str = '';
+	@if( so.hasPermission("/system/role/edit")) 
+		str += $.formatString(' <img onclick="$(this).scope().editFun(\'{0}\');" src="{1}" title="编辑"/>  ', row.id, '${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/pencil.png');
+	str += '&nbsp;';
+	@if( so.hasPermission("/system/role/grant")) 
+		str += $.formatString(' <img onclick="$(this).scope().grantFun(\'{0}\');" src="{1}" title="授权"/> ', row.id, '${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/key.png');
+	str += '&nbsp;';
+	@if( so.hasPermission("/system/role/delete")) 
+		str += $.formatString(' <img onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="删除"/> ', row.id, '${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cancel.png');
+    @
+	return str;
+}
+
+
+</script>
+<script src="${CONTEXT_PATH}/static/app/ctrls/role-ctrls.js" type="text/javascript"></script>
+
+@}; include("../layout/_layout.html",{head:head,body:body,js:js,ctrls:ctrls}){}    
+	   
+	

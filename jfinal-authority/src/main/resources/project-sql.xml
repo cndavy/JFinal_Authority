@@ -1,0 +1,25 @@
+
+
+
+
+<sqlGroup name="project">
+
+	<sqlGroup name="project">
+	    
+	    <sql id="list">SELECT project.id,project.name,
+			DATE_FORMAT(project.createdate,"%m-%d %h:%i:%s")as createdate ,
+			   FROM `project`
+			 desc limit 5;</sql>
+	    
+	</sqlGroup>
+
+
+</sqlGroup>
+
+
+
+
+
+
+
+

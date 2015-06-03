@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Maven: org.fusesource.hawtdispatch:hawtdispatch:1.11">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/hawtdispatch/hawtdispatch/1.11/hawtdispatch-1.11.jar!/" />
+    </CLASSES>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/hawtdispatch/hawtdispatch/1.11/hawtdispatch-1.11-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

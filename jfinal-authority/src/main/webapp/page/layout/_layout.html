@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html  ng-app="MainApp">
+<head>
+@ include("../common/_css.html"){} 
+${head!}
+<script type="text/javascript">
+var PATH='${CONTEXT_PATH}';
+</script>
+
+</head>
+<body  ${ctrls!}  >
+
+${body!}
+
+@ include("../common/_js.html"){} 
+
+${js!}
+</body>
+</html>

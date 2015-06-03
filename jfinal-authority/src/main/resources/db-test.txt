@@ -1,0 +1,14 @@
+#jdbcUrl = jdbc:mysql://127.0.0.1:3306/jfinal_demo?useUnicode=true&amp;zeroDateTimeBehavior=convertToNull
+
+#user = root
+#password =231566qq
+#dbType=mysql
+#jdbcUrl = jdbc:oracle:thin:@48.0.191.161:1521/htc
+
+#user = han
+#password =han
+#dbType=oracle
+
+#devMode = true
+#decrypt=true
+

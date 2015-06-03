@@ -1,0 +1,337 @@
+
+2015-03-05 09:08:30
+[ERROR]-[Thread: main]-[org.apache.shiro.web.env.EnvironmentLoader.initEnvironment()]: Shiro environment initialization failed
+java.lang.Error: Unresolved compilation problems: 
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	AuthorizingRealm cannot be resolved to a type
+	CacheManager cannot be resolved to a type
+	AuthenticationInfo cannot be resolved to a type
+	AuthenticationToken cannot be resolved to a type
+	AuthenticationException cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UnknownAccountException cannot be resolved to a type
+	The method getStatus() is undefined for the type User
+	LockedAccountException cannot be resolved to a type
+	SimpleAuthenticationInfo cannot be resolved to a type
+	The method getName() is undefined for the type User
+	The method getPwd() is undefined for the type User
+	The method getName() is undefined for the type ShiroDbRealm
+	AuthorizationInfo cannot be resolved to a type
+	PrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	The method findByName(String) is undefined for the type User
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	Cache cannot be resolved to a type
+	AuthorizationInfo cannot be resolved to a type
+	The method getAuthorizationCache() is undefined for the type ShiroDbRealm
+
+	at com.jayqqaa12.shiro.ShiroDbRealm.<init>(ShiroDbRealm.java:3)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at java.lang.Class.newInstance(Class.java:438)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:177)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:164)
+	at org.apache.shiro.config.ReflectionBuilder.createNewInstance(ReflectionBuilder.java:144)
+	at org.apache.shiro.config.ReflectionBuilder.buildObjects(ReflectionBuilder.java:119)
+	at org.apache.shiro.config.IniSecurityManagerFactory.buildInstances(IniSecurityManagerFactory.java:161)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:124)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:102)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:88)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:46)
+	at org.apache.shiro.config.IniFactorySupport.createInstance(IniFactorySupport.java:123)
+	at org.apache.shiro.util.AbstractFactory.getInstance(AbstractFactory.java:47)
+	at org.apache.shiro.web.env.IniWebEnvironment.createWebSecurityManager(IniWebEnvironment.java:203)
+	at org.apache.shiro.web.env.IniWebEnvironment.configure(IniWebEnvironment.java:99)
+	at org.apache.shiro.web.env.IniWebEnvironment.init(IniWebEnvironment.java:92)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:45)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:40)
+	at org.apache.shiro.web.env.EnvironmentLoader.createEnvironment(EnvironmentLoader.java:221)
+	at org.apache.shiro.web.env.EnvironmentLoader.initEnvironment(EnvironmentLoader.java:133)
+	at org.apache.shiro.web.env.EnvironmentLoaderListener.contextInitialized(EnvironmentLoaderListener.java:58)
+	at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:771)
+	at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:424)
+	at org.eclipse.jetty.server.handler.ContextHandler.startContext(ContextHandler.java:763)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:249)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1250)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:706)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:492)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.doStart(HandlerWrapper.java:95)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:277)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at com.jfinal.server.JettyServer.doStart(JettyServer.java:120)
+	at com.jfinal.server.JettyServer.start(JettyServer.java:64)
+	at com.jfinal.core.JFinal.start(JFinal.java:159)
+	at com.jayqqaa12.MyConfig.main(MyConfig.java:168)
+
+2015-03-05 09:08:30
+[WARN]-[Thread: main]-[org.eclipse.jetty.util.component.AbstractLifeCycle.setFailed()]: FAILED o.e.j.w.WebAppContext{/,file:/D:/git/JFinal_Authority/jfinal-authority/src/main/webapp/}: java.lang.Error: Unresolved compilation problems: 
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	AuthorizingRealm cannot be resolved to a type
+	CacheManager cannot be resolved to a type
+	AuthenticationInfo cannot be resolved to a type
+	AuthenticationToken cannot be resolved to a type
+	AuthenticationException cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UnknownAccountException cannot be resolved to a type
+	The method getStatus() is undefined for the type User
+	LockedAccountException cannot be resolved to a type
+	SimpleAuthenticationInfo cannot be resolved to a type
+	The method getName() is undefined for the type User
+	The method getPwd() is undefined for the type User
+	The method getName() is undefined for the type ShiroDbRealm
+	AuthorizationInfo cannot be resolved to a type
+	PrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	The method findByName(String) is undefined for the type User
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	Cache cannot be resolved to a type
+	AuthorizationInfo cannot be resolved to a type
+	The method getAuthorizationCache() is undefined for the type ShiroDbRealm
+
+java.lang.Error: Unresolved compilation problems: 
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	AuthorizingRealm cannot be resolved to a type
+	CacheManager cannot be resolved to a type
+	AuthenticationInfo cannot be resolved to a type
+	AuthenticationToken cannot be resolved to a type
+	AuthenticationException cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UnknownAccountException cannot be resolved to a type
+	The method getStatus() is undefined for the type User
+	LockedAccountException cannot be resolved to a type
+	SimpleAuthenticationInfo cannot be resolved to a type
+	The method getName() is undefined for the type User
+	The method getPwd() is undefined for the type User
+	The method getName() is undefined for the type ShiroDbRealm
+	AuthorizationInfo cannot be resolved to a type
+	PrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	The method findByName(String) is undefined for the type User
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	Cache cannot be resolved to a type
+	AuthorizationInfo cannot be resolved to a type
+	The method getAuthorizationCache() is undefined for the type ShiroDbRealm
+
+	at com.jayqqaa12.shiro.ShiroDbRealm.<init>(ShiroDbRealm.java:3)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at java.lang.Class.newInstance(Class.java:438)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:177)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:164)
+	at org.apache.shiro.config.ReflectionBuilder.createNewInstance(ReflectionBuilder.java:144)
+	at org.apache.shiro.config.ReflectionBuilder.buildObjects(ReflectionBuilder.java:119)
+	at org.apache.shiro.config.IniSecurityManagerFactory.buildInstances(IniSecurityManagerFactory.java:161)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:124)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:102)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:88)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:46)
+	at org.apache.shiro.config.IniFactorySupport.createInstance(IniFactorySupport.java:123)
+	at org.apache.shiro.util.AbstractFactory.getInstance(AbstractFactory.java:47)
+	at org.apache.shiro.web.env.IniWebEnvironment.createWebSecurityManager(IniWebEnvironment.java:203)
+	at org.apache.shiro.web.env.IniWebEnvironment.configure(IniWebEnvironment.java:99)
+	at org.apache.shiro.web.env.IniWebEnvironment.init(IniWebEnvironment.java:92)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:45)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:40)
+	at org.apache.shiro.web.env.EnvironmentLoader.createEnvironment(EnvironmentLoader.java:221)
+	at org.apache.shiro.web.env.EnvironmentLoader.initEnvironment(EnvironmentLoader.java:133)
+	at org.apache.shiro.web.env.EnvironmentLoaderListener.contextInitialized(EnvironmentLoaderListener.java:58)
+	at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:771)
+	at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:424)
+	at org.eclipse.jetty.server.handler.ContextHandler.startContext(ContextHandler.java:763)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:249)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1250)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:706)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:492)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.doStart(HandlerWrapper.java:95)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:277)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at com.jfinal.server.JettyServer.doStart(JettyServer.java:120)
+	at com.jfinal.server.JettyServer.start(JettyServer.java:64)
+	at com.jfinal.core.JFinal.start(JFinal.java:159)
+	at com.jayqqaa12.MyConfig.main(MyConfig.java:168)
+
+2015-03-05 09:08:30
+[WARN]-[Thread: main]-[org.eclipse.jetty.util.component.AbstractLifeCycle.setFailed()]: FAILED org.eclipse.jetty.server.Server@782663d3: java.lang.Error: Unresolved compilation problems: 
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	AuthorizingRealm cannot be resolved to a type
+	CacheManager cannot be resolved to a type
+	AuthenticationInfo cannot be resolved to a type
+	AuthenticationToken cannot be resolved to a type
+	AuthenticationException cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UnknownAccountException cannot be resolved to a type
+	The method getStatus() is undefined for the type User
+	LockedAccountException cannot be resolved to a type
+	SimpleAuthenticationInfo cannot be resolved to a type
+	The method getName() is undefined for the type User
+	The method getPwd() is undefined for the type User
+	The method getName() is undefined for the type ShiroDbRealm
+	AuthorizationInfo cannot be resolved to a type
+	PrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	The method findByName(String) is undefined for the type User
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	Cache cannot be resolved to a type
+	AuthorizationInfo cannot be resolved to a type
+	The method getAuthorizationCache() is undefined for the type ShiroDbRealm
+
+java.lang.Error: Unresolved compilation problems: 
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	The import org.apache cannot be resolved
+	AuthorizingRealm cannot be resolved to a type
+	CacheManager cannot be resolved to a type
+	AuthenticationInfo cannot be resolved to a type
+	AuthenticationToken cannot be resolved to a type
+	AuthenticationException cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UsernamePasswordToken cannot be resolved to a type
+	UnknownAccountException cannot be resolved to a type
+	The method getStatus() is undefined for the type User
+	LockedAccountException cannot be resolved to a type
+	SimpleAuthenticationInfo cannot be resolved to a type
+	The method getName() is undefined for the type User
+	The method getPwd() is undefined for the type User
+	The method getName() is undefined for the type ShiroDbRealm
+	AuthorizationInfo cannot be resolved to a type
+	PrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	The method findByName(String) is undefined for the type User
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimpleAuthorizationInfo cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	SimplePrincipalCollection cannot be resolved to a type
+	The method getName() is undefined for the type ShiroDbRealm
+	Cache cannot be resolved to a type
+	AuthorizationInfo cannot be resolved to a type
+	The method getAuthorizationCache() is undefined for the type ShiroDbRealm
+
+	at com.jayqqaa12.shiro.ShiroDbRealm.<init>(ShiroDbRealm.java:3)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at java.lang.Class.newInstance(Class.java:438)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:177)
+	at org.apache.shiro.util.ClassUtils.newInstance(ClassUtils.java:164)
+	at org.apache.shiro.config.ReflectionBuilder.createNewInstance(ReflectionBuilder.java:144)
+	at org.apache.shiro.config.ReflectionBuilder.buildObjects(ReflectionBuilder.java:119)
+	at org.apache.shiro.config.IniSecurityManagerFactory.buildInstances(IniSecurityManagerFactory.java:161)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:124)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createSecurityManager(IniSecurityManagerFactory.java:102)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:88)
+	at org.apache.shiro.config.IniSecurityManagerFactory.createInstance(IniSecurityManagerFactory.java:46)
+	at org.apache.shiro.config.IniFactorySupport.createInstance(IniFactorySupport.java:123)
+	at org.apache.shiro.util.AbstractFactory.getInstance(AbstractFactory.java:47)
+	at org.apache.shiro.web.env.IniWebEnvironment.createWebSecurityManager(IniWebEnvironment.java:203)
+	at org.apache.shiro.web.env.IniWebEnvironment.configure(IniWebEnvironment.java:99)
+	at org.apache.shiro.web.env.IniWebEnvironment.init(IniWebEnvironment.java:92)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:45)
+	at org.apache.shiro.util.LifecycleUtils.init(LifecycleUtils.java:40)
+	at org.apache.shiro.web.env.EnvironmentLoader.createEnvironment(EnvironmentLoader.java:221)
+	at org.apache.shiro.web.env.EnvironmentLoader.initEnvironment(EnvironmentLoader.java:133)
+	at org.apache.shiro.web.env.EnvironmentLoaderListener.contextInitialized(EnvironmentLoaderListener.java:58)
+	at org.eclipse.jetty.server.handler.ContextHandler.callContextInitialized(ContextHandler.java:771)
+	at org.eclipse.jetty.servlet.ServletContextHandler.callContextInitialized(ServletContextHandler.java:424)
+	at org.eclipse.jetty.server.handler.ContextHandler.startContext(ContextHandler.java:763)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:249)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1250)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:706)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:492)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.doStart(HandlerWrapper.java:95)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:277)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at com.jfinal.server.JettyServer.doStart(JettyServer.java:120)
+	at com.jfinal.server.JettyServer.start(JettyServer.java:64)
+	at com.jfinal.core.JFinal.start(JFinal.java:159)
+	at com.jayqqaa12.MyConfig.main(MyConfig.java:168)

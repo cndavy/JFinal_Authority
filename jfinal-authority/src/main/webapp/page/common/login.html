@@ -1,0 +1,32 @@
+<!DOCTYPE html >
+<html ng-app="MainApp">
+<head>
+<link rel="stylesheet" href="${CONTEXT_PATH}/static/css/login.css">
+<script src="${CONTEXT_PATH}/static/js/security.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/js/jquery-1.8.3.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/js/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/js/angularjs/ui-utils/ui-utils.min.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/js/jsbase.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/app/app.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/app/ctrls/login-ctrls.js" type="text/javascript"></script>
+</head>
+
+<body >
+	<form form action="${CONTEXT_PATH}/login" id="login"  name="f" method="post" ng-controller="LoginCtrls">
+      <input type="hidden" ng-model="modulus" ng-init="modulus='${modulus}'">
+      <input type="hidden" ng-model="exponent" ng-init="exponent='${exponent}'">
+      <div ng-model="msg" ng-init="msg='${msg!}'"></div>
+        <input  type="text" ng-show="false"   name="key"  ng-model="key"  >
+		<h1>Log In</h1>
+		<fieldset id="inputs">
+			<input required   type="text" placeholder="Username" ng-model="username"  ng-init="username= '${name!}'" autofocus required>
+			 <input  required type="password" placeholder="Password" ng-model="pwd"  value="" required>
+		</fieldset>
+		<fieldset id="actions">
+			<input type="submit" class="button" ng-disabled="f.username.$invalid||f.pwd.$invalid"  ng-click="go()" value="Log in">
+			 <a href="#"  >{{msg}}</a> 
+			 <a href="/initDb">无法访问点这里</a>
+		</fieldset>
+	</form>
+</body>
+</html>

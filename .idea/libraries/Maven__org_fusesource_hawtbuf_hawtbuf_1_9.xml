@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Maven: org.fusesource.hawtbuf:hawtbuf:1.9">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9.jar!/" />
+    </CLASSES>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/fusesource/hawtbuf/hawtbuf/1.9/hawtbuf-1.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

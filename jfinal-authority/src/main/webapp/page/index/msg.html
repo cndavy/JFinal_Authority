@@ -1,0 +1,55 @@
+<body>
+	<div class="widget">
+		<!-- Widget title -->
+		<div class="widget-content">
+			<!-- Widget content -->
+			<div class="padd">
+				<ul class="chats">
+                      @ for(m in list){
+                        @ if(m.uid== session.user.id){
+									<li class="by-me">
+									<div class="avatar pull-left">
+                        @}else{ 
+								<li class="by-other">
+									<div class="avatar pull-right">
+						@}
+						<img src="${CONTEXT_PATH}${m.icon}" alt="" />
+              			</div>
+		                 <div class="chat-content">
+			              <div class="chat-meta">
+		     			     ${m.name} <span class="pull-right">${m.date}</span>
+		            		</div>
+		      	            	${m.msg}
+		                	<div class="clearfix"></div>
+		                	</div>
+                        @}
+		                </ul>
+		</div>
+		<div class="widget-foot">
+			<form class="form-inline">
+				<div class="form-group">
+					<input type="text"  id="msg" class="form-control" placeholder="Send your message here...">
+					<button type="button" class="btn btn-default" ui-event="{ click : 'sendMsg($event)' }" onclick="sendMsg()" >Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	</div>
+<script>
+function sendMsg(){
+	  var msg =$('#msg').val();
+	  $.post('${CONTEXT_PATH}/index/msg/add',{'msg.msg':msg},function(result){
+		  if(result.code==200){
+			  $(".chats li").first().remove();
+			   $('.chats').append("<li class='by-me'><div class='avatar pull-left'><img src='${CONTEXT_PATH}${session.user.attrs['icon']!}'  /></div><div class='chat-content'><div class='chat-meta'>${session.user.name!} <span class='pull-right'>1分钟前</span></div>"+msg+"<div class='clearfix'></div></div>");
+		  }
+		  else{
+			  $.messager.show({
+	                title:'error',
+	                msg:result.msg,
+	                showType:'show'
+	            });}
+  },'json');}
+</script>
+	
+</body>

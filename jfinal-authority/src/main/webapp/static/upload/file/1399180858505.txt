@@ -1,0 +1,308 @@
+
+//other  
+
+1. 匹配注解 /\*[\s\S]*?\*/
+
+//myeclipse  
+
+1. 去掉 js vaildate
+ 找到在项目路径下面的.project文件中配置了一些验证信息. 去掉以下几行即可
+<buildCommand> 
+<name>org.eclipse.wst.jsdt.core.javascriptValidator</name> 
+<arguments> 
+</arguments> 
+</buildCommand> 
+--------------------------------------------------------------------------- 
+<nature>org.eclipse.wst.jsdt.core.jsNature</nature> 
+
+
+// android 
+
+1. 对于 service 改变 UI 的状态的 问题 可以 发送一个广播 比较 合适  
+   当然 还可以 绑定 服务 发送 消息 然后 回调 (直接 使用 静态变量 的话 容易 引发 单线程 安全问题)
+
+2. intent 取不到 参数 看看 是不是 原来是 int 的 你用了 getStringExte 来取 当然 取不到
+
+3 .任何 时候 都不必要 返回null
+
+4 . 为防止 json 解析 异常 所以 一定 要 try catch 
+
+5 .FLAG_ACTIVITY_CLEAR_TOP  startActivity 的时候 每次重新 oncreate  不会 onresume 了
+
+6. java.lang.RuntimeException: bad array lengths  notification 的图片太大的 异常。。
+
+7 onNewIntent  在luachmodel=singleTop 的时候 每次开始 会被调用
+
+8.  4.0 以上 没有运行过的 程序无法接受系统广播 可以放在 /system/app 目录下 解决
+
+9.  需要。so 文件的 系统应用 应该把so文件 放到 /system/lib 目录下 解决
+
+
+11  断点续传  就是设置头信息 RANKE  bytes= 1-222  。。。
+
+12 . addFooterView 必需在ListView 设置 adapter 之前 添加 否则报错
+
+14 Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_NEW_TASK  开启同一个activty 用 notification 
+
+
+13 . 修改 /system/app 权限 可以修改系统应用
+ adb shell
+ shell中输入命令（命令最前面的$和#号不用输入）
+$ su 
+# mount -o rw,remount -t yaffs2 /dev/block/mtdblock3 /system 
+# chmod 777 /system
+# chmod 777 /system/lib 
+
+修改 权限为644
+
+//abase 
+
+1. abase的断点下载的时候 要主要 不能重复开始 相同任务 否则出错
+
+//service 
+
+EL表达式取出对象中对象的属性 所以如果是 url里面的请求是取不出来的  必需要加${param.xxx} 就可以了
+
+1. jquery 获得 request 的方法  扩展
+
+
+2 .分组日期 可以用 group by  先统一 日期 DATE_FAMRT
+
+3 . form 一定要加 name 才能上传 成功
+
+4. form 里面 不能嵌套 。。 否则 无法提交   直接用js  改 form 提交的 url 就行了！！！！
+
+5. el 解析  出错 看看 是不是 没有get 方法。。。
+
+6 .读取页面乱码 需要在读取流的时候 设置读取（页面的编码）
+
+7. /web-inf/lib 下面不能建立文件夹放jar 会读取不到
+
+8. 注意测试时候 浏览器的缓存文件
+
+
+// Thread 
+
+ synchronized 方法 锁定的是 类的对象  可以用锁定类来控制
+ 
+ synchronized（obj） 不对的对象就是不相同的锁
+ 
+
+//tomcat 
+ 
+ 修改root 目录  注意 MAIN-INF 下面不要加content.xml了 
+ <Context  crossContext="true" docBase="nstore" path="" reloadable="true" debug="0" /> 
+
+
+
+// javascript
+
+
+1. 直接通过 js 传递过来的参数 没有编码   可能需要  转码 一般都是 iso8859-1 转 utf8
+
+2 .InvalidStateError: DOM Exception 11  对象无效  可能是 目标是 一个file 而传递的是string
+
+3. type写了button，name写了submit 的话 就会 Uncaught TypeError: Property 'submit' of object #<HTMLFormElement> is not a function"
+
+
+// easyui 
+
+
+1. easyui 在 ie 使用 冻结列  会产生很多问题
+
+2.  使用冻结列 会新建立 个 view  导致很多问题
+
+3  detailview 里面又使用easyui 会导致冲突
+
+4 . teegrid 选不中 是因为 id field 重复 导致的。
+
+5  bootstartp 3 与 easyui 冲突 
+
+//sql 
+
+删除重复数据
+delete from push_user  where id in 
+(select id from (select  max(id) as id,count(uid) as count from push_user  group by uid having count >1 order by count desc) as tab )
+
+//highcharts 
+
+1. ie页面 叠影  添加 <!DOCOUMENT HTML> 头即可
+
+
+
+
+
+// linux 环境
+
+64位系统安装32位环境 解决adb无法使用
+apt-get install ia32-libs
+
+
+
+打开vi /etc/profile 在最下面输入
+
+JAVA_HOME=/usr/local/java/jdk1.6.0_45
+export JRE_HOME=/usr/local/java/jdk1.6.0_45/jre 
+export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH 
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+
+export TOMCAT_HOME=/usr/local/apache/apache-tomcat-7.0.42
+export PATH=$TOMCAT_HOME/bin:$PATH
+
+
+
+source /etc/profile
+
+
+gcc g++
+　　　　sudo apt-get install gcc-4.4
+　　　　sudo apt-get install g++-4.4
+　　　　cd /usr/bin
+　　　　ls -l gcc*
+　　　　sudo mv gcc gcc.bak
+　　　　sudo ln -s gcc-4.4 gcc
+　　　　ls -l g++*
+　　　　sudo mv g++ g++.bak
+　　　　sudo ln -s g++-4.4 g++
+　　　　gcc -v
+　　　　g++ -v
+
+java
+
+JAVA_HOME=/usr/local/java/jdk1.6.0_45
+export JRE_HOME=/usr/local/java/jdk1.6.0_45/jre 
+export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH 
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+
+
+luxujunby@126.com
+
+2014@2014
+
+115.29.187.86   service-2
+62434b13
+
+112.124.68.155  service-1
+8962a0f9
+
+
+192.168.149.122
+root
+birda20130921
+
+rm -rf /usr/local/tomcat/apache-tomcat-7.0.42/webapps/ROOT
+
+用远程登陆客户端登陆linux 
+进入tomcat/logs/文件夹下 
+键入指令：tail -f catalina.out 
+
+打开Tomcat下conf文件夹中的server.xml文件
+可以修改 端口号
+
+
+35611ec6-71ec-11e3-9691-ac162d8b0b34   service -2
+
+196e3cf8-71ec-11e3-9691-ac162d8b0b34   service -1
+
+
+人体时钟
+
+<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+
+
+TODO  
+
+   python
+
+  萌妹百科网站 --
+          
+  每个萌妹有个单独的页面包含 头像 照片 简介 详细信息 等 
+
+  大家都可以查看
+
+ 1）注册后 可新建或编辑百科信息 （
+    24小时内 大家都可以对内容审核80%通过）
+    新建和编辑的处理不同  编辑的话会加锁 别人失败了才能继续编辑
+    验证方式：发邮件 （邮箱的唯一性）
+
+ 2）喜欢按钮 （同一个帐号只能点一次）
+ 3）萌妹分类 （标签）
+ 4）萌妹排行 （根据喜欢人数排序）
+ 
+ 5）搜索萌妹 （爱好 性格 长相？）
+ 
+ 6）提交自己 ：）
+
+ 7) 使用 solr 做 索引服务器
+
+ 8) maven 
+
+
+
+4 cocos-2d  js  研究
+
+
+------jfinal authoirty
+
+
+1. 密码错误3次 弹出 验证码
+2. 集群 session
+
+3. sae cookie
+
+4. 过滤js脚本
+
+5. sso 单点登录
+
+
+
+
+
+
+
+-在线书城以及后台处理（web）2个月以上
+
+--精选
+----推荐图书
+----热门图书
+
+--分类
+
+--排行
+
+--个人中心 
+
+--搜索
+
+---充值
+
+--收费章节
+ ---读取下一章时扣费（不同的书扣不同的金币） 
+ ---可全部下载 （一次付清 不同的书金币不同）
+
+--签到送金币
+
+
+- reader（基本设置）  半个月
+
+ ---根据是否为标题来设置字体
+
+--设置封面
+
+
+--- 文件管理 （增删改）
+   
+   --批量导入
+   --快速导入
+   --已导入
+
+-- 设置页面调整
+
+
+
+ 
+
+
+ 
+
+
