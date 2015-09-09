@@ -18,7 +18,6 @@
           <element id="library" level="project" name="Maven: org.antlr:antlr4-annotations:4.2" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.3.2" />
           <element id="library" level="project" name="Maven: org.jsoup:jsoup:1.7.3" />
-          <element id="library" level="project" name="Maven: javax.mail:javax.mail:1.4.0.v201005080615" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
           <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.3" />
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-all:1.2.3" />
@@ -45,15 +44,19 @@
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.16" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.1" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.9" />
+          <element id="library" level="project" name="Maven: net.sf.jxls:jxls-core:0.9.9" />
+          <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.0" />
+          <element id="library" level="project" name="Maven: commons-jexl:commons-jexl:1.1" />
           <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.6.9" />
           <element id="library" level="project" name="Maven: com.mortennobel:java-image-scaling:0.8.5" />
           <element id="library" level="project" name="Maven: com.jhlabs:filters:2.0.235" />
-          <element id="library" level="project" name="Maven: javax.mail:mail:1.4.2" />
-          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: javax.mail:javax.mail:1.4.0.v201005080615" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="E:\资料\开发工具\IdeaProjects\jfinal-1.9-all\JFinal_Authority\jfinal-authority\target/MANIFEST.MF" />
+        <element id="file-copy" path="D:\审计项目管理\JFinal_Authority\jfinal-authority\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="jfinal-authority/web/Web" />
     </root>

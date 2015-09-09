@@ -3,6 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/jfinal/jetty-server/8.1.8/jetty-server-8.1.8.jar!/" />
     </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jfinal/jetty-server/8.1.8/jetty-server-8.1.8-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/jfinal/jetty-server/8.1.8/jetty-server-8.1.8-sources.jar!/" />
     </SOURCES>

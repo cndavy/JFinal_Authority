@@ -15,14 +15,16 @@ MainApp.controller('ContentCtrls', [ '$scope', function($scope) {
 			});
 			
 		  $scope.panels = [
-	            {
-	          	id : 'p1',
-		        title : 'log',
-		        collapsible : true,
-		        height : 250,
-		        closable: true,
-		        href : PATH+'/rh?to=log'
-	            },
+			  {
+				  id : 'p1',
+				  title : '代办事宜',
+				  collapsible : true,
+				  minimizable:true,
+				  maximizable:true,
+				  height : 250,
+				  closable: true,
+				  href : PATH+'/rh?to=todo'
+			  },/*
 			      {
 				id : 'p2',
 				title : 'bug',
@@ -30,26 +32,29 @@ MainApp.controller('ContentCtrls', [ '$scope', function($scope) {
 				closable: true,
 				href : PATH+'/rh?to=bug'
 		     	}
-			, {
-				id : 'p3',
-				title : 'msg',
-				closable: true,
-				 height : 320,
-				collapsible : true,
-				href : PATH+'/index/msg/list'
-			}, {
+			, */ {
+				  id : 'p3',
+				  title : '消息',
+				  closable: true,
+				  minimizable:true,
+				  maximizable:true,
+				   height : 420,
+				  collapsible : true,
+				  href : PATH+'/index/msg/list'
+			},  /*{
 				id : 'p4',
 				title : 'about',
 				collapsible : true,
 				closable: true,
 				href : PATH+'/rh?to=about'
-			},
+			},*/
 			{
-			id : 'p5',
-			title : 'chart',
-			collapsible : true,
-			closable: true,
-			href : PATH+'/rh?to=chart'
+				id : 'p5',
+				title : 'chart',
+				height : 220,
+				collapsible : true,
+				closable: true,
+				href : PATH+'/rh?to=chart'
 		     }
 			
 			];
@@ -67,20 +72,22 @@ MainApp.controller('ContentCtrls', [ '$scope', function($scope) {
 			var state = $.cookie('portal-state');
 			
 			if (!state) {
-				state = 'p4,p2,p5:p1,p3';/*冒号代表列，逗号代表行*/
+				state = 'p1,p5:p3';/*冒号代表列，逗号代表行*/
 			}
 			$scope.addPortalPanels(state);
 			$('#portal').portal('resize');
- 	   
+
     } ;
-    
+
 
 	  $scope.sendMsg=function(){
 		  var msg =$('#msg').val();
 		  $.post(PATH+'/index/msg/add',{'msg.msg':msg},function(result){
 			  if(result.code==200){
 				  $(".chats li").first().remove();
-				   $('.chats').append("<li class='by-me'><div class='avatar pull-left'><img src=PATH+'${session.user.attrs['icon']!}'  /></div><div class='chat-content'><div class='chat-meta'>${session.user.name!} <span class='pull-right'>1分钟前</span></div>"+msg+"<div class='clearfix'></div></div>");
+				   $('.chats').append("<li class='by-me'><div class='avatar pull-left'>" +
+				   "<img src=PATH+'${session.user.attrs['icon']!}'  /></div>" +
+				   "<div class='chat-content'><div class='chat-meta'>${session.user.name!} <span class='pull-right'>1分钟前</span></div>"+msg+"<div class='clearfix'></div></div>");
 			  }
 			  else{
 				  $.messager.show({

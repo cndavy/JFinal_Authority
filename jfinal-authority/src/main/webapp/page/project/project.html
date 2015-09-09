@@ -2,7 +2,7 @@
 <title>项目管理</title>
 <link rel="stylesheet" href="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/themes/simple/simple.css">
 
-@}; var ctrls= "ng-controller='PrjCtrls'" ; var body ={
+@}; var ctrls= "ng-controller='PrjManageCtrls'" ; var body ={
         
  <div class="easyui-layout" data-options="fit : true,border : false"  >
 
@@ -16,43 +16,37 @@
   <div  ng-model="so_view" ng-init="so_view=true"></div>
 @}if( so.hasPermission("/common/file/fileManage")) {
  <div  ng-model="so_fm" ng-init="so_fm=true"></div>
-@}if( so.hasPermission("/project/status")) {
- <div  ng-model="so_status" ng-init="so_status=true"></div>
-@}
-		<div data-options="region:'north',title:'查询条件',border:false" style="height: 160px; overflow: hidden;">
+
+@}if( so.hasPermission("/project/endprj")) {
+	 <div  ng-model="so_endprj" ng-init="so_endprj=true"></div>
+ @} if( so.hasPermission("/projectPlan/chgperson")) {
+	 <div  ng-model="so_chgperson" ng-init="so_chgperson=true"></div>
+	 @}
+
+		<div data-options="region:'north',title:'查询条件',border:false" style="height: 120px; overflow: hidden;">
 			<form id="searchForm">
 				<table class="table table-hover table-condensed" style="display: none;">
 					<tr>
 						<th>项目名称</th>
-						<td><input name="name" placeholder="可以模糊查询" class="span2" /></td>
-						<th>项目类型</th>
+						<td><input name="auditprj.name-*" placeholder="可以模糊查询" class="span2" /></td>
+						<th>项目开始时间</th>
+						<td ><input class="span2 easyui-datebox" name="createdateStart" placeholder="点击选择时间"/></td><td>至</td><td><input class="span2 easyui-datebox" name="createdateEnd" placeholder="点击选择时间"/></td>
+ 				   </tr>
+					<tr><th>项目结束时间</th>
 						<td>
-						<select name="type" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'"> 
-						<option value="1">类型1
-						<option value="2">类型2
-						</select></td>
+							<input class="span2 easyui-datebox"  name="enddateStart"   placeholder="点击选择时间"/></td><td>至</td><td><input class="span2 easyui-datebox" name="enddateEnd" placeholder="点击选择时间"/></td>
+							<th>项目发起人</th>
+						<td>
+							<select   class="easyui-combogrid span2"  id="prjManager" style="width: 140px; height: 29px;"	 />
+							<input    name="system_user.id" id="prjManagers"  type="hidden" />
+						</td>
 					</tr>
-					<tr>
-						<th>创建时间</th>
-						<td ><input class="span2" name="createdateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="createdateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-				   <th>项目状态</th>
-					<td>
-					<select name="status" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-					<option value="1">待处理
-					<option value="2">已处理
-					<option value="3">忽略
-					</select>
-					</td>
-					</tr>
-					<tr>
-						<th>最后修改时间</th>
-						<td colspan="3"><input class="span2" name="modifydateStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="modifydateEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-					</tr>
+
 				</table>
 			</form>
 		</div>
-		<div data-options="region:'center',border:false">
-			<table id="dataGrid"></table>
+		<div data-options="region:'center',border:false" style="height: auto">
+			<table id="dataGrid" class="table table-hover table-condensed"></table>
 		</div>
 	
 	<div id="toolbar" style="display: none;">
@@ -64,128 +58,164 @@
 
 	<div id="menu" class="easyui-menu" style="width: 120px; display: none;">
 	
-	         <div ng-show="so_add" ng-click="addFun();" data-options="iconCls:'pencil_add'">增加</div>
-			<div ng-show="so_delete" ng-click="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
-			<div ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'">编辑</div>
+	         <div ng-show="so_add" ng-click="addFun();" data-options="iconCls:'pencil_add'" style=" ">增加</div>
+			<div ng-show="so_delete" ng-click="deleteFun();" data-options="iconCls:'pencil_delete'"style=" ">删除</div>
+			<div ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'"style=" ">编辑</div>
 	</div>
 	<!--  dialog -->
-  <div id="dlg" name="dlg"   class="easyui-dialog" style=" width: 650px; height: 350px;padding:5px 10px"
-	   closed="true" buttons="#dlg-buttons"  data-options="resizable:true,modal:true">
+  <div id="dlg" name="dlg"   class="easyui-dialog" style=" width: 650px; height: 350px;padding:5px 10px;"
+	   closed="true" buttons="#dlg-buttons"  data-options="resizable:true,modal:true ,fit:true  ">
 	
-    <div class="easyui-layout" data-options="fit:true,border:false">
-	 <div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+    <div class="easyui-layout" data-options="fit:true,border:false " style="overflow: hidden;">
+	 <div data-options="region:'center',border:false" title=""  style="overflow: hidden;">
 		<form id="fm"   method="post">
-		<input name="prj.id" type="hidden"  >
-			<table class="table table-hover table-condensed">
-				<tr>
+			<table class="table table-hover table-condensed"  style="display: none ;overflow: hidden;" >
+				<tr><td><input name="prj.id" type="hidden"  /></td></tr>
+				<tr >
 					<th>项目名称</th>
-					<td><input name="prj.name" type="text" placeholder="请输入项目名称" class="easyui-validatebox span2" data-options="required:true"  ></td>
-					<th> </th>
-					<td></td>
+					<td colspan="1"><input name="prj.name" type="text" placeholder="请输入项目名称"  required="true" class="easyui-validatebox span2" data-options="required:true"  /></td>
+
 				</tr>
 				<tr>
 				  <div  ng-show="so_fm">
 				 	<th>浏览服务器附件</th>
-					 	<td>
+					 	<td colspan="4">
 					 	<button type="button" class="btn"  ui-event="{click:'fileManage($event)'}"  ng-click="fileManage()">浏览服务器</button>
 					 </td>
 			      </div>
-				 <th>项目类型</th>
-					<td>
-					<select name="prj.type" class="easyui-combobox" data-options="required:true,width:140,height:29,editable:false,panelHeight:'auto'">
-					<option value="1">类型1
-					<option value="2">类型2
-					</select>
-					</td>
+
 				</tr>
-				<tr>
-					<th>项目状态</th>
-					<td>
-						<select name="prj.status" class="easyui-combobox" data-options="required:true,width:140,height:29,editable:false,panelHeight:'auto'">
-							<option value="1">待处理
-							<option value="2">已处理
-							<option value="3">忽略
-						</select>
-					</td>
+                <tr>
+				   <th  >项目开始日期</th>
+				   <td  >
+					   <input    class="easyui-datebox span2" required="true" missingMessage="日期必须填写" editable="false" name="prj.createdate" placeholder="点击选择时间"/>
+				   </td>
 				</tr>
+				<tr>   <th>项目计划结束日期</th>
+				   <td  >
+					   <input   class="easyui-datebox span2" required="true" validType="TimeCheck['prj.createdate']" invalidMessage="项目计划结束日期必须大于项目开始日期" editable="false" name="prj.planenddate" placeholder="点击选择时间"/>
+				   </td>
+
+		    	</tr>
+
 				<tr>
 					<td colspan="4">
 						<textarea name="prj.des" id="note" cols="50" rows="5" style="visibility: hidden;"> </textarea></td>
 				</tr>
+                <tr><td>
+					<div id="dlg-buttons">
+						<a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="submit()">确定</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg').dialog('close')">取消</a>
+					</div>
+				</td></tr>
 			</table>
+
 		</form>
 	</div>
+
 </div>
+
   </div>
-    <div id="dlg-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="submit()">确定</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg').dialog('close')">取消</a>
-    </div> 
+
 	<!--  dialog  view  -->
-  <div id="dlg2"  class="easyui-dialog" style=" width:450px;height:380px;padding:5px 10px" closed="true" buttons="#dlg-buttons2"  data-options="resizable:true,modal:true ">
+  <div id="dlg2"  class="easyui-dialog" style=" width:450px;height:380px;padding:5px 10px" closed="true" buttons="#dlg-buttons2"  data-options="resizable:true,modal:true  ,fit:true">
    <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
-		<input name="prj.id" type="hidden"  >
+		<input name="prj.id" type="hidden"  />
 			<table class="table table-hover table-condensed">
 				<tr><td colspan="4">
 					<textarea   id="note2" cols="50" rows="5" style="visibility: hidden;"> </textarea></td></tr>
 			</table>
 	</div>
-   </div>
-  </div>
-    <div id="dlg-buttons2">
-        <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg2').dialog('close')">取消</a>
-    </div> 	
 
- <div id="dlg-status"   class="easyui-dialog" style=" width:340px;height:150px;padding:5px 10px" closed="true" buttons="#dlg-buttons-status"  data-options="resizable:true,modal:true">
-	
-  <div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
-		<form id="fm-status" method="post">
-		    <input id="ids" name="ids" type="hidden" class="span2"  >
-			<input name="prj.id" type="hidden" class="span2"  >
-			<table class="table table-hover table-condensed">
-				<tr>
-					<th>修改状态</th>
-					<td>
-					<select id="bug_status" class="easyui-combobox" name="prj.status" style="width: 140px; height: 29px;">
-					<option value="1">待处理
-					<option value="2">已处理
-					<option value="3">忽略
-					</select><img src="${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cut_red.png" ng-click="$('#bug_status').combobox('clear');" /></td>
-				</tr>
-			</table>
-		</form>
+  </div>
+  </div>
+	 <div id="dlg-buttons2">
+		 <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg2').dialog('close')">取消</a>
 	 </div>
-    </div>
-     </div>
-  <div id="dlg-buttons-status" >
-        <a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="submitStatus('#fm-status','#dlg-status')">确定</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg-status').dialog('close')">取消</a>
- </div>
- 
+
+	 <div id="dlg-endprj" class="easyui-dialog" style=" width:450px;height:280px;padding:5px 10px ;overflow: hidden;"
+		  closed="true" buttons="dlg-buttons-endprj"  data-options="modal:true  ">
+		 <div data-options=" border:false, fit:true "   >
+		 <form id="fmdlgendprj" method="post" style="height: 100px">
+			 <table class="table table-hover table-condensed">
+				 <tr  style="display: none"><td> <input name="prj.id" type="hidden"/></td></tr>
+				 <tr>
+					 <th>项目结束时间</th>
+					 <td  >
+						 <input class="span2 easyui-datebox" name="prj.enddate" required="true"  missingMessage="日期必须填写" editable="false" placeholder="点击选择时间"	 />
+					 </td>
+				 </tr>
+			 </table>
+
+		 </form>
+			 <div id="dlg-buttons-endprj" >
+				 <a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="endPrjFun1()">确定</a>
+				 <a href="javascript:void(0)" class="easyui-linkbutton"
+					onclick="javascript:$('#dlg-endprj').dialog('close')">取消</a>
+			 </div>
+		 </div>
+
+
+	 </div>
+
+
+	 <div id="dlg-person" class="easyui-dialog" style=" width:450px;height:280px;padding:5px 10px ;overflow: hidden;" closed="true"
+		  buttons="#dlg-buttons-person"  data-options="modal:true  ,fit:true">
+
+		 <div data-options=" region:'north',border:false, fit:true " style="height: 50px; overflow: hidden;"  >
+			 <form id="fm-person" data-options=" ">
+				 <input name="prj.id" type="hidden"  />
+				 <table  >
+					 <tr>
+						 <th>项目时间</th>
+					  <td ><input class="easyui-datebox" name="prj.createdate" placeholder="点击选择时间"   />至<input class="easyui-datebox" name="prj.planenddate" placeholder="点击选择时间"  /></td>
+ 						 <th>项目发起人</th>
+						 <td>
+							 <select   class="easyui-combogrid span2"   id="prjManagerid" style="width: 140px; height: 29px;"
+																									 data-options="" />
+							 <input    name="prj.pid" id="prjManagerids"  type="hidden" />
+						 </td>
+					 </tr>
+
+
+				 </table>
+
+			 </form>
+
+		 </div>
+		 <div data-options="region:'center',border:false, fit:true" style="height: 80%; " >
+			 <table id="personselectGrid"></table>
+
+		 </div>
+	 </div>
+	 <div  id="dlg-buttons-person"  data-options="region:'center',border:false, fit:true">
+		 <a href="javascript:void(0)" class="easyui-linkbutton"  ng-click="personOk()" >刷新</a>
+		 <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg-person').dialog('close')">取消</a>
+	 </div>
+
  <div ng-init="load()"></div>
 </div>  
 @};var js={
 <script  type="text/javascript">
-var  formatterFun=function(value, row, index) {
+
+	function formatterFunPrjManage(value, row, index) {
 		var str = '';
 		@if( so.hasPermission("/project/view")) 
-			str += $.formatString('<img   onclick="$(this).scope().viewFun(\'{0}\')"  src="{1}" title="查看"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
+			str += $.formatString('<img   ng-click="viewFun(\'{0}\')"  src="{1}" title="项目查看"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
 		@if( so.hasPermission("/project/edit")) 
-			str += $.formatString('<img   onclick="$(this).scope().editFun(\'{0}\')"  src="{1}" title="编辑"/> ', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_edit.png');
+			str += $.formatString('<img  onclick="$(this).scope().editFun(\'{0}\')"  src="{1}" title="项目编辑"/> ', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_edit.png');
 		@if( so.hasPermission("/project/delete")) 
-			str += $.formatString('<img  onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="删除"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_delete.png');
-		@if( so.hasPermission("/project/status")) 
-			str += $.formatString('<img   onclick="$(this).scope().statusFun(\'{0}\',1);" src="{1}" title="修改状态"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note.png');
-	   @if( so.hasPermission("/project/status"))
-		str += $.formatString('<img   onclick="$(this).scope().statusFun(\'{0}\',1);" src="{1}" title="修改状态"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note.png');
-
-		@
+			str += $.formatString('<img  onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="项目删除"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_delete.png');
+		@if( so.hasPermission("/project/endprj"))
+			str += $.formatString('<img   onclick="$(this).scope().endPrjFun(\'{0}\');" src="{1}" title="项目终止"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/bomb.png');
+        @if( so.hasPermission("/projectPlan/chgperson"))
+		str += $.formatString('<img  onclick="$(this).scope().personFun(\'{0}\');" src="{1}" title="项目人员管理"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/status_online.png');
 			return str;
 }
+
 </script>
 <script type="text/javascript" src="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/kindeditor-all-min.js" charset="utf-8"></script>
-<script src="${CONTEXT_PATH}/static/app/ctrls/prj-ctrls.js" type="text/javascript"></script>
+<script src="${CONTEXT_PATH}/static/app/ctrls/prjmanage-ctrls.js" type="text/javascript" charset="utf-8" ></script>
 
  @}; include("../layout/_layout.html",{head:head,body:body,js:js,ctrls:ctrls}) {}

@@ -15,7 +15,12 @@
 			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.kenai.nbpwr</groupId>
+			<artifactId>com-sun-pdfview</artifactId>
+			<version>1.0.5-201003191900</version>
+			<scope>test</scope>
+		</dependency>
  
   
 		<dependency>
@@ -136,12 +141,12 @@
 		</dependency>
 
 
+
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail</artifactId>
-			<version>1.4.5</version>
+			<version>1.4.0.v201005080615</version>
 		</dependency>
-
 
 
 	</dependencies>

@@ -34,8 +34,8 @@ function loadFrom(fm,node){
 		var namespace='';
 		
 		var map=  new Map();
-		
-		 $(fm+' input,select').each(function(){ 
+// $(fm).children().find('input,select').
+		 $(fm+' input,select').each(function(){
 		        name=$(this).attr('name'); 
 		    if(name){
 		    	namespace= name.split('.')[1];
@@ -299,7 +299,8 @@ function tgundo(tg) {
  * @param title
  */
 function showDialog(id,title){
-     $("#index_layout").layout("fullScreen");
+   //  $("").layout("fullScreen");
+
 	 $(id).show().dialog('open').dialog('setTitle',title);	
 }
 

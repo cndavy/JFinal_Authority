@@ -52,7 +52,7 @@
 </div>
 <div id="toolbar" style="display: none;">
 	<a ng-show="so_add" ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a> <a
-		ng-show="so_batchGrant" " ng-click="batchGrantFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'tux'">批量授权</a> <a
+		ng-show="so_batchGrant"  ng-click="batchGrantFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'tux'">批量授权</a> <a
 		ng-show="so_batchDelete" ng-click="batchDeleteFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'delete'">批量删除</a>
 	<a ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">过滤条件</a> <a
 		ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清空条件</a>
@@ -66,8 +66,9 @@
 </div>
 
 <!--  dialog -->
-<div id="dlg" class="easyui-dialog" style="width: 450px; height: 350px; padding: 5px 10px" closed="true" buttons="#dlg-buttons"
-	data-options="resizable:true,modal:true,maximizable:true,minimizable:true,inline:false">
+<div id="dlg" class="easyui-dialog" style="width: 450px; height: 350px; padding: 5px 10px"
+	 closed="true" buttons="#dlg-buttons"
+	data-options="resizable:true,modal:true,maximizable:true,minimizable:true">
 
 	<div class="easyui-layout" data-options="fit:true,border:false">
 		<div data-options="region:'center',border:false" title="" style="overflow: hidden;">

@@ -1,13 +1,12 @@
 package com.jayqqaa12.shiro;
 
-import java.util.List;
-
 import com.jayqqaa12.jbase.jfinal.ext.ShiroExt;
-import com.jayqqaa12.jbase.util.L;
 import com.jayqqaa12.system.model.Log;
 import com.jayqqaa12.system.model.Res;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
+
+import java.util.List;
 
 /***
  * 让 shiro 基于 url 拦截
@@ -43,7 +42,7 @@ public class ShiroInterceptor implements Interceptor
 			else if (url.contains("add")) Log.dao.insert(ai.getController(), Log.EVENT_ADD);
 			else if (url.contains("edit")) Log.dao.insert(ai.getController(), Log.EVENT_UPDATE);
 			else if (url.contains("grant")) Log.dao.insert(ai.getController(), Log.EVENT_GRANT);
-
+			else if (url.contains("chg")) Log.dao.insert(ai.getController(), Log.EVENT_GRANT);
 			if (urls.contains(url) && !ext.hasPermission(url)) ai.getController().renderError(401);
 
 		} catch (Exception e)

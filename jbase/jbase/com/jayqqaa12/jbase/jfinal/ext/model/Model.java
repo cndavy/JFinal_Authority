@@ -334,6 +334,7 @@ public class Model<M extends com.jfinal.plugin.activerecord.Model<M>> extends co
 	public boolean saveAndCreateDate()
 	{
 		this.setDate("createdate");
+
 		return this.save();
 	}
 
@@ -413,8 +414,9 @@ public class Model<M extends com.jfinal.plugin.activerecord.Model<M>> extends co
 	}
 
 	public long getCount(String sql)
-	{
-		sql = Txt.split(sql.toLowerCase(), "from")[1];
+	{  int ll=Txt.split(sql.toLowerCase(), "from")[0].length()+4;
+		sql=sql.substring(ll,sql.length());
+		//sql = Txt.split(sql.toLowerCase(), "from")[1];
 		if (sql.contains("order by")) sql = Txt.split(sql, "order by")[0];
 
 		return findFirst(" select count(*) as c from " + sql).getLong("c");
@@ -532,7 +534,7 @@ public class Model<M extends com.jfinal.plugin.activerecord.Model<M>> extends co
 	public String getCreateDate()
 	{
 
-		return getStr("createdate");
+		return getStr("createDate");
 
 	}
 

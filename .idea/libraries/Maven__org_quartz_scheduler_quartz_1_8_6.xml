@@ -3,6 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/1.8.6/quartz-1.8.6.jar!/" />
     </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/1.8.6/quartz-1.8.6-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/1.8.6/quartz-1.8.6-sources.jar!/" />
     </SOURCES>

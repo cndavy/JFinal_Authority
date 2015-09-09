@@ -179,7 +179,7 @@ MainApp.controller('IndexCtrls', [ '$scope', function($scope) {
 		};
 
 			
-			$.getScript('http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&charset=utf-8', function(){
+		/*	$.getScript('http://php.weather.sina.com.cn/iframe/index/w_cl.php?code=js&day=0&city=&charset=utf-8', function(){
 				//window.SWther 这是返回的天气情况
 				var city, dataInfo = window.SWther.w ;
 				for( var city in dataInfo ); //获取 天气
@@ -204,7 +204,7 @@ MainApp.controller('IndexCtrls', [ '$scope', function($scope) {
 
 			});
 
-			/**
+		*/	/**
 			 * 更换EasyUI主题的方法
 			 */
 			  $scope.changeThemeFun=function(themeName) {

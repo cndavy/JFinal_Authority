@@ -5,15 +5,96 @@
 <sqlGroup name="project">
 
 	<sqlGroup name="project">
-	    
-	    <sql id="list">SELECT project.id,project.name,
+
+		<sql id="list">SELECT project.id,project.name,
 			DATE_FORMAT(project.createdate,"%m-%d %h:%i:%s")as createdate ,
 			   FROM `project`
 			 desc limit 5;</sql>
-	    
+		<sql id="getPerson">select DISTINCT  system_user.id ,name,des  from system_user where system_user.id ;</sql>
+		<sql id="listPerson">select   auditprj.id, auditprj.name,auditprj.des,DATE_FORMAT( createdate,"%Y-%m-%d")as createdate,
+			DATE_FORMAT(planenddate,"%Y-%m-%d")as planenddate,
+			DATE_FORMAT( enddate,"%Y-%m-%d")as  enddate ,system_user.des as prjName ,auditprj.prjManager as pid
+			FROM `auditprj` left join system_user on system_user.id = auditprj.prjManager
+			 </sql>
+		<sql id="getPersonInPrjList" >
+			select u.id as uId ,u.name ,u.des, a.id    ,a.bgnDate,a.endDate
+			from system_user u INNER JOIN
+			(auditprjplan a INNER  join auditprj p on a.prjId=p.id and  p.id=?) on uId=u.id
+		</sql>
 	</sqlGroup>
+	<sqlGroup name="projectPlan">
+		<sql id="listProjectByPerson">
+			select    prj.id, prj.name as Pname,prj.des as PDesc ,DATE_FORMAT( plan.bgnDate,"%Y-%m-%d")as bgnDate,
+
+			DATE_FORMAT( plan.endDate,"%Y-%m-%d")as  endDate ,
+			prj.prjManager as ManagerId,manager.des  as ManagerName,u.des as uName ,plan.uId
+			FROM `auditprj`  prj join auditprjplan plan on plan.prjId
+			= prj.id
+			left join system_user u on u.id=plan.uId   left join system_user manager on manager.id= prj.prjManager
+		</sql>
+      <sql id="listPrjAndPersonWithCount">
+		  select   auditprj.id, auditprj.name,auditprj.des,DATE_FORMAT( createdate,"%Y-%m-%d")as createdate,
+		  DATE_FORMAT(planenddate,"%Y-%m-%d")as planenddate,
+		  DATE_FORMAT( enddate,"%Y-%m-%d")as  enddate ,
+		  system_user.des as prjName ,auditprj.prjManager as pid , PP.c as PersonNum
+		  from `auditprj`    left join system_user on system_user.id = auditprj.prjManager
+		  left join (select count(* ) c ,  prjId from auditprjplan  group by prjId ) PP on PP.prjId=auditprj.id and PP.prjId=auditprj.id
 
 
+	  </sql>
+		<sql id="GetCalViewData">
+
+			<![CDATA[
+		 select  plan.id,  DATE_FORMAT( plan.bgnDate,"%Y-%m-%d")as bgnDate,
+
+			DATE_FORMAT( plan.endDate,"%Y-%m-%d")as  endDate
+			, u.des as PersonName ,DATE_FORMAT( prj.createdate ,"%Y-%m-%d")as PrjBgnDate ,
+			DATE_FORMAT(  prj.planenddate ,"%Y-%m-%d")as PrjFuture ,DATE_FORMAT(prj.enddate ,"%Y-%m-%d")as PrjEndDate
+			,manager.des  as ManagerName ,prj.id as PrjId ,prj.name as PrjName
+			from `auditprjplan` plan left join system_user  u on u.id=plan.uId
+			join auditprj prj  on  plan.prjId=prj.id and  (
+			  plan.bgnDate<=? and plan.endDate>=?   or plan.bgnDate<=? and plan.endDate >=?
+			  or  plan.bgnDate>=? and  plan.endDate<=? or plan.bgnDate<=? and  plan.endDate>=?
+                    )
+			left join   `system_user` manager on manager.id = prj.prjManager
+		]]>
+		</sql>
+        <sql id="selectDetailByPlanId">
+			select  plan.id,  DATE_FORMAT( plan.bgnDate,"%Y-%m-%d")as bgnDate,
+
+			DATE_FORMAT( plan.endDate,"%Y-%m-%d")as  endDate
+			,ifnull( u.des,"") as PersonName ,DATE_FORMAT( prj.createdate ,"%Y-%m-%d")as PrjBgnDate ,
+			DATE_FORMAT(  prj.planenddate ,"%Y-%m-%d")as PrjFuture ,DATE_FORMAT(prj.enddate ,"%Y-%m-%d")as PrjEndDate
+			,manager.des  as ManagerName ,prj.id as PrjId ,ifnull(prj.name,"") as PrjName
+			from `auditprjplan` plan left join system_user  u on u.id=plan.uId
+			join auditprj prj  on  plan.prjId=prj.id 	left join   `system_user` manager on manager.id = prj.prjManager
+
+			where plan.id=?
+		</sql>
+		<sql id="listIdleByPerson">
+			<![CDATA[
+		 select  plan.id,  DATE_FORMAT( plan.bgnDate,"%Y-%m-%d")as bgnDate,
+
+			DATE_FORMAT( plan.endDate,"%Y-%m-%d")as  endDate
+			, u.des as PersonName ,DATE_FORMAT( prj.createdate ,"%Y-%m-%d")as PrjBgnDate ,
+			DATE_FORMAT(  prj.planenddate ,"%Y-%m-%d")as PrjFuture ,DATE_FORMAT(prj.enddate ,"%Y-%m-%d")as PrjEndDate
+			,manager.des  as ManagerName ,prj.id as PrjId ,ifnull(prj.name,"") as PrjName
+			from `auditprjplan` plan
+			join auditprj prj  on  plan.prjId=prj.id and  (
+			  plan.bgnDate<=? and plan.endDate>=?   or plan.bgnDate<=? and plan.endDate >=?
+			  or  plan.bgnDate>=? and  plan.endDate<=? or plan.bgnDate<=? and  plan.endDate>=?
+                    ) right join system_user  u on u.id=plan.uId
+			left join   `system_user` manager on manager.id = prj.prjManager
+		]]>
+		</sql>
+	</sqlGroup>
+<sqlGroup name="item">
+	<sqlGroup name="Column">
+		<sql id="listColumn">
+
+		</sql>
+	</sqlGroup>
+</sqlGroup>
 </sqlGroup>
 
 

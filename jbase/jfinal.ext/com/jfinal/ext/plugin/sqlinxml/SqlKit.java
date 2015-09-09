@@ -1,13 +1,12 @@
 package com.jfinal.ext.plugin.sqlinxml;
 
+import com.jfinal.ext.kit.JaxbKit;
+import com.jfinal.log.Logger;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.jayqqaa12.jbase.util.L;
-import com.jfinal.ext.kit.JaxbKit;
-import com.jfinal.log.Logger;
 
 public class SqlKit {
 
@@ -19,7 +18,13 @@ public class SqlKit {
         if (sqlMap == null) {
             throw new NullPointerException("SqlInXmlPlugin not start");
         }
-        return sqlMap.get(groupNameAndsqlId);
+        String result=sqlMap.get(groupNameAndsqlId);
+        if(result==null) {
+            init();
+            return sqlMap.get(groupNameAndsqlId);
+        }
+        else return result;
+
     }
 
     static void clearSqlMap() {

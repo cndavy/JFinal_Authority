@@ -14,6 +14,68 @@
     </database-info>
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="han"/>
+    <table name="auditdaybook" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="RcdDate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="ModiDate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="DeleDate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="DayBook" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="MeId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auditdaybook_ibfk_1" columns="MeId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auditdaybook_ibfk_2" columns="MeId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="R_9" unique="false" columns="MeId"/>
+    </table>
+    <table name="audititem" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="ItemTitle" sqlType="VARCHAR" precision="600" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ItemFieldLists" sqlType="VARCHAR" precision="600" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ItemDesc" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="ItemCreaterId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ItemDocType" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ItemWriter" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="createdate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="enddate" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="audititem_ibfk_1" columns="ItemCreaterId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="audititemlist_ibfk_1" table="audititemlist" schema="" catalog="han" columns="ItemId"/>
+      <index name="R_5" unique="false" columns="ItemCreaterId"/>
+    </table>
+    <table name="audititemlist" schema="" catalog="han" type="TABLE">
+      <column name="ItemId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ItemContents" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="ItemRelaPersId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="serialId" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="ItemId,ItemRelaPersId,serialId"/>
+      <foreign-key name="audititemlist_ibfk_1" columns="ItemId" ref-table="audititem" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="audititemlist_ibfk_2" columns="ItemRelaPersId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="auditprj" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="600" scale="0" nullable="true" jdbcType="12"/>
+      <column name="createdate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="enddate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="des" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="planenddate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="prjManager" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auditprj_ibfk_1" columns="prjManager" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="auditprjplan_ibfk_2" table="auditprjplan" schema="" catalog="han" columns="prjId"/>
+      <index name="R_4" unique="false" columns="prjManager"/>
+    </table>
+    <table name="auditprjplan" schema="" catalog="han" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="bgnDate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="endDate" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="planSts" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="uId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prjId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="auditprjplan_ibfk_1" columns="uId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="auditprjplan_ibfk_2" columns="prjId" ref-table="auditprj" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="R_2" unique="false" columns="uId"/>
+      <index name="R_3" unique="false" columns="prjId"/>
+    </table>
     <table name="index_msg" schema="" catalog="han" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="msg" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
@@ -98,6 +160,12 @@
       <column name="email" sqlType="VARCHAR" precision="222" scale="0" nullable="true" jdbcType="12"/>
       <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="auditdaybook_ibfk_1" table="auditdaybook" schema="" catalog="han" columns="MeId"/>
+      <exported-key name="auditdaybook_ibfk_2" table="auditdaybook" schema="" catalog="han" columns="MeId"/>
+      <exported-key name="audititem_ibfk_1" table="audititem" schema="" catalog="han" columns="ItemCreaterId"/>
+      <exported-key name="audititemlist_ibfk_2" table="audititemlist" schema="" catalog="han" columns="ItemRelaPersId"/>
+      <exported-key name="auditprj_ibfk_1" table="auditprj" schema="" catalog="han" columns="prjManager"/>
+      <exported-key name="auditprjplan_ibfk_1" table="auditprjplan" schema="" catalog="han" columns="uId"/>
       <exported-key name="index_msg_ibfk_1" table="index_msg" schema="" catalog="han" columns="uid"/>
       <exported-key name="system_log_ibfk_1" table="system_log" schema="" catalog="han" columns="uid"/>
       <exported-key name="system_user_role_ibfk_2" table="system_user_role" schema="" catalog="han" columns="user_id"/>

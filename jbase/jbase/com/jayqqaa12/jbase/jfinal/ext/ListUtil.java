@@ -1,10 +1,10 @@
 package com.jayqqaa12.jbase.jfinal.ext;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.jayqqaa12.jbase.jfinal.ext.model.Model;
 import com.jfinal.plugin.activerecord.Record;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /***
  * for jfinal
@@ -112,5 +112,17 @@ public class ListUtil
 		}
 
 		return objs;
+	}
+	public static  String inStringTrans(String in ){ // "1,3,4"  --> "1" , "3" ,"4"
+		String [] perIdArr=in.split(",");
+		StringBuffer sql=new StringBuffer();
+		for (String n : perIdArr) {
+			sql.append("\"").append(n).append("\"");
+
+				sql.append(",");
+
+		}
+
+		return sql.delete(sql.length()-1,sql.length()).toString();
 	}
 }

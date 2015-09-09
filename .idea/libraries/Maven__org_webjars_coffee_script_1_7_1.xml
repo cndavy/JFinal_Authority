@@ -3,6 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/coffee-script/1.7.1/coffee-script-1.7.1.jar!/" />
     </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/webjars/coffee-script/1.7.1/coffee-script-1.7.1-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/webjars/coffee-script/1.7.1/coffee-script-1.7.1-sources.jar!/" />
     </SOURCES>

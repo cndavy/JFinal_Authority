@@ -26,6 +26,8 @@ public class UrlConfig
 	public static final String VIEW_ERROR_401 = ERROR+"/401.html";
 
 	public static final String PROJECT=BASE+"/project";
+	public static final String PROJECTPLAN=BASE+"/projectPlan";
+	public static final String AUTDITITEM=BASE+"/auditItem";
 	
 
 	

@@ -133,12 +133,12 @@ public class Form
 	}
 
 	public void addFrom(Form form, String name, String value)
-	{
+	{  if(value==null) return;
 		if (name.endsWith("-*"))
 		{
 			String newName = Txt.split(name, "-*")[0];
 			form.fuzzySerach.add(newName);
-			form.fromMap.put(newName, value);
+			form.fromMap.put(newName, value );
 		}
 		else if (name.endsWith("-i"))
 		{
@@ -262,23 +262,32 @@ public class Form
 		{
 			String value = fromMap.get(key);
 			String namespace =tableName;
-			
-			if(key.contains(".")) namespace="";
-			
+			String key1=key;
+			//if(key.contains(".")) namespace="";
+			if(key.contains(".")&&namespace.length()==0) {
+				namespace=key.split("\\.",2)[0]+'.';
+				key1=key.split("\\.",2)[1];
+			}
 			if (StringUtils.isNotBlank(value))
 			{
 				if ("dateStart".equals(key)) gteq(namespace + "date", quotation(value));
-				else if ("dateEnd".equals(key)) lteq(namespace + "date", quotation(value));
-				else if ("createdateStart".equals(key)) gteq(namespace + "createdate", quotation(value));
-				else if ("createdateEnd".equals(key)) lteq(namespace + "createdate", quotation(value));
-				else if ("modifydateStart".equals(key)) gteq(namespace + "modifydate", quotation(value));
-				else if ("modifydateEnd".equals(key)) lteq(namespace + "modifydate", quotation(value));
+				else if ((namespace +"dateEnd").equals(key)) lteq(namespace + "date", quotation(value));
+				else if ((namespace +"createdateStart").equals(key)) gteq(namespace + "createdate", quotation(value));
+				else if ((namespace +"createdateEnd").equals(key)) lteq(namespace + "createdate", quotation(value));
+				else if ((namespace +"modifydateStart").equals(key)) gteq(namespace + "modifydate", quotation(value));
+				else if ((namespace +"modifydateEnd").equals(key)) lteq(namespace + "modifydate", quotation(value));
+				else if ((namespace +"enddateStart").equals(key)) gteq(namespace + "enddate", quotation(value));
+				else if ((namespace +"enddateEnd").equals(key)) lteq(namespace + "enddate", quotation(value));
+				else if ((namespace +"endDateStart").equals(key)) gteq(namespace + "endDate", quotation(value));
+				else if ((namespace +"endDateEnd").equals(key)) lteq(namespace + "endDate", quotation(value));
+				else if ((namespace +"bgnDateStart").equals(key)) gteq(namespace + "bgnDate", quotation(value));
+				else if ((namespace +"bgnDateEnd").equals(key)) lteq(namespace + "bgnDate", quotation(value));
 
-				else if (fuzzySerach.contains(key)) like(namespace + key, value);
-				else if (integerValue.contains(key)) where += " and " + namespace + key + "=" + value + " ";
-				else if (inValue.contains(key)) where += " and " + namespace + key + " in (" + value + ")";
-				else if (ninValue.contains(key)) where += " and " + namespace + key + " not in (" + value + ")";
-				else where += " and " + namespace + key + "=" + quotation(value) + " ";
+				else if (fuzzySerach.contains(key)) like(namespace + key1, value);
+				else if (integerValue.contains(key)) where += " and " + namespace + key1 + "=" + value + " ";
+				else if (inValue.contains(key)) where += " and " + namespace + key1 + " in (" + value + ")";
+				else if (ninValue.contains(key)) where += " and " + namespace + key1 + " not in (" + value + ")";
+				else where += " and " + namespace + key1 + "=" + quotation(value) + " ";
 
 			}
 		}

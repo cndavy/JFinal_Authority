@@ -1,5 +1,13 @@
 package com.jayqqaa12.jbase.jfinal.ext.ctrl;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.jayqqaa12.jbase.util.Validate;
+import com.jayqqaa12.model.easyui.Form;
+import com.jfinal.ext.kit.JaxbKit;
+import com.jfinal.ext.render.excel.PoiRender;
+import com.jfinal.ext.route.ControllerBind;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,14 +16,6 @@ import java.lang.reflect.ParameterizedType;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
-import com.jayqqaa12.jbase.util.Validate;
-import com.jayqqaa12.model.easyui.Form;
-import com.jfinal.ext.kit.JaxbKit;
-import com.jfinal.ext.render.excel.PoiRender;
-import com.jfinal.ext.route.ControllerBind;
 
 public class Controller<T> extends com.jfinal.core.Controller
 {
@@ -185,7 +185,7 @@ public class Controller<T> extends com.jfinal.core.Controller
 	public Form getFrom(String tableName)
 	{
 
-		return Form.getForm(tableName, this, "date", "dateStart", "dateEnd", "name", "title", "des", "msg", "url", "icon", "text", "pwd",
+		return Form.getForm(tableName, this, "date", "dateStart", "dateEnd","dataend","prjManager", "name", "title", "des", "msg", "url", "icon", "text", "pwd",
 				"status", "type", "createdateStart", "createdateEnd", "modifydateStart", "modifydateEnd", "operation");
 	}
 

@@ -3,6 +3,9 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/com/servlets/cos/05Nov2002/cos-05Nov2002.jar!/" />
     </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/servlets/cos/05Nov2002/cos-05Nov2002-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/com/servlets/cos/05Nov2002/cos-05Nov2002-sources.jar!/" />
     </SOURCES>
