@@ -1,0 +1,202 @@
+
+<div  id="todo-portal"  >
+    <div id="todoGrid" >
+
+    </div>
+
+</div>
+<div id="dlg-itemWriter" class="easyui-dialog" style="fit:true"
+     closed="true" buttons="dlg-buttons-itemWriter"  data-options="fit:true">
+
+    <form id="fmdlgitemWriter" method="post"     data-options="">
+        <input name="auditItem.id" type="hidden"  />
+        <table   id="tbl_itemWriter"   data-options="">
+
+        </table>
+        <div id="dlg-buttons-itemWriter" >
+            <a href="javascript:void(0)" class="easyui-linkbutton"   onclick="javascript:saveItems()">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton"
+               onclick="javascript:$('#dlg-itemWriter').dialog('close')">取消</a>
+        </div>
+    </form>
+</div>
+<div id="dlg-detail" class="easyui-dialog" style="fit:true"
+     closed="true" buttons="dlg-buttons-detail"  data-options="fit:true">
+    <div class="easyui-layout" data-options="fit:true,border:false" style="">
+        <div  region="center" data-options=" border:false" title=""  style="">
+            <table   id="tbl_detail"   data-options="">
+                <tr><td colspan="4">
+                    <textarea   id="detail_note" cols="50" rows="5" style="visibility: hidden;"> </textarea></td></tr>
+
+            </table>
+        </div>
+        <div id="dlg-buttons-detail" region="south" split="true" style="height:100px;" >
+            <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:detailFun()">确定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton"
+               onclick="javascript:$('#dlg-detail').dialog('close')">取消</a>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/kindeditor-all-min.js" charset="utf-8"></script>
+
+<script>
+    function formatAction(value, row, index){
+
+       return   $.formatString('<img onclick="itemWriterFun(\'{0}\')"  src="{1}" title="填写"/>',
+               row.ItemId, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
+    }
+    $("#todoGrid").datagrid({
+        height: 340,
+        url: PATH+'/auditItem/getToDo',
+        method: 'POST',
+        queryParams: {  },
+        idField: '产品ID',
+        striped: true,
+        fitColumns: true,
+        singleSelect: false,
+        rownumbers: true,
+        pagination: true,
+        nowrap: false,
+        pageSize: 10,
+        pageList: [10, 20, 50, 100],
+        showFooter: true,
+        columns: [[
+
+            { field: 'Name', title: '姓名', width: 30, align: 'left' },
+            { field: 'ItemTitle', title: '事项标题', width: 100, align: 'left' },
+            { field: 'Per', title: '完成度', width: 30, align: 'right',
+                editor: {
+                    type: 'numberbox',
+                    options: {
+                        min: 0,
+                        precision: 0
+                    }
+                }
+            } ,{
+                field : 'action',
+                type:'button',
+                title : '操作',
+                width : 20 ,
+                formatter : formatAction
+
+            }
+        ]],
+        onBeforeLoad: function (param) {
+        },
+        onLoadSuccess: function (data) {
+
+        },
+        onLoadError: function () {
+
+        },
+        onClickCell: function (rowIndex, field, value) {
+
+        }
+
+    });
+    var detail_editor, current_detail;
+ function itemWriterFun (id) {
+         console.log(id)
+        if (id != undefined)$('#todoGrid').datagrid('selectRecord', id);
+
+        var node = $('#todoGrid').datagrid('getSelected');
+        if (node) {
+
+            $.post(PATH + '/auditItem/GetItemsToDo',node,
+                    function(data,textStatus) {
+                        if (textStatus == 'success') {
+                            $('#tbl_itemWriter').empty();
+                            showDialog('#dlg-itemWriter', "填写事项");
+                            loadFrom('#fmdlgitemWriter', node);
+                            $('#fmdlgitemWriter input[name="auditItem.id"]').attr("value",node.ItemId)
+                           /*  console.log( $('#fmdlgitemWriter input[name="auditItem.id"]'))*/
+                            for (var item in data){
+// {ItemRelaPersId: 3, ItemContents: "a", serialId: "a", ItemId: 2}
+                                var arrName =data[item]['des'];
+                                var arrColumnName=data[item]['serialId']	;
+                                var arrValue=	data[item]['ItemContents']	;
+                                if (!arrValue)arrValue='';
+                                var arrNameId=	data[item]['ItemRelaPersId']
+                                {
+                                    var ai = $('#tbl_itemWriter').append('<tr><th>' + arrName+","+arrColumnName + '</th><td></td></tr>')
+                                    var vid='item.detail'+ arrNameId
+                                    var td_last=ai.find('td').last();
+                                    td_last.append('<input type="hidden" name="item.itemName_'+  arrNameId+'" value="'+arrColumnName+'" />')
+                                            .append('<input name="item.itemContent_' + arrNameId
+                                            + '" multiple="true"   '
+                                            + ' class="easyui-textbox" style="width:500px; " data-options="required:true" '
+                                            + '" value="'
+                                            +arrValue
+                                            +'"'
+                                            +' />'  )
+
+                                            .append('<a href="javascript:void(0)"   >详细</a>');
+
+                                }
+                            }
+                            $('#tbl_itemWriter a').each( function(i,element){
+                                $(element).linkbutton({plain:true});
+                                $(element).click(function(){
+                                    var v=$(element).prev().val();
+                                   current_detail=$(element).prev();
+                                    KindEditor.html('#detail_note',v);
+                                    showDialog('#dlg-detail','编辑详情');
+                                });
+                            });
+                        }
+                    }, "json");
+
+            url = PATH + '/auditItem/itemWriter';
+        }
+
+    };
+    function createDetailNote(){
+        detail_editor = KindEditor.create('#detail_note', {
+            width : '750px',
+            height : '360px',
+            items : [ 'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/', 'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','multiimage', 'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink' ],
+            uploadJson : PATH+'/common/file/upload',
+            fileManagerJson : PATH+'/common/file/fileManage',
+            allowFileManager : true
+        });
+    };
+     function detailFun (id){
+       detail_editor.sync();
+        var html =  detail_editor.html();
+
+        current_detail.attr("value",html);
+        $('#dlg-detail').dialog('close');
+    }
+    function saveItems() {
+        parent.$.messager.confirm('询问', '您是否要保存当前事项？', function (b) {
+            if (b) {
+                parent.$.messager.progress({
+                    title: '提示',
+                    text: '数据处理中，请稍后....'
+
+                });
+                $('#fmdlgitemWriter').form('submit', {
+                    url: PATH + '/auditItem/itemWriter'
+                    ,
+                    success: function (result) {
+                        result = $.parseJSON(result);
+
+                        if (result.code == 200) {
+                            $('#dlg-itemWriter').dialog('close');
+                            //	$('#dataGrid').datagrid('reload');
+                        }else {
+                            $.messager.alert('提示',result.msg);
+                        }
+                        parent.$.messager.progress('close');
+                    }
+                });
+            }
+        });
+
+    };
+     createDetailNote();
+</script>
+
+

@@ -1,0 +1,56 @@
+
+<sqlGroup name="auditItem">
+	<sqlGroup name="list">
+    <sql id="listItem">
+		SELECT a.*,u.des as ItemCreaterName
+		FROM `audititem` a left join system_user u on a.ItemCreaterId=u.id
+
+	</sql>
+		<sql id="getPerson">select DISTINCT  true as selected,system_user.id ,name,des  from system_user where system_user.id ;</sql>
+	</sqlGroup>
+	<sqlGroup name="list">
+		<sql id="getColumns">
+               select itemFieldLists from audititem  a where a.id= ?
+		</sql>
+		<sql id="deleteByItemIdAndPersId">
+			delete  from audititemlist   where   ItemId = ? and ItemRelaPersId = ?
+	 	</sql>
+		<sql id="selectByItemIdAndPersId">
+			select a.*,u.des  from audititemlist a join system_user u on u.id=a.ItemRelaPersId
+			where   a.ItemId = ? and a.ItemRelaPersId in  ( ## )
+			order by a.ItemRelaPersId
+		</sql>
+		<sql id="insertByItemIdAndPersId">
+			insert into     audititemlist  (ItemId,ItemContents,ItemRelaPerId,serialId) values(?,?,?,?)
+
+		</sql>
+		<sql id="deleteByItemIdAndPersIdAndSerialId">
+			delete  from audititemlist   where   ItemId = ? and ItemRelaPersId = ? and serialId = ?
+		</sql>
+		<sql id="deleteItemListByItemId">
+			delete  from audititemlist   where   ItemId = ?
+		</sql>
+		<sql id="selectAuditListByItemId">
+			select a.*,u.des  from audititemlist a join system_user u on u.id=a.ItemRelaPersId
+			where   a.ItemId = ?  order by  a.ItemRelaPersId
+		</sql>
+	</sqlGroup>
+	<sqlGroup name="todo">
+		<sql id="getToDO">
+			select ItemId,ItemRelaPersId,Name, sum(tf)/count(tf)*100 as Per ,audititem.ItemTitle,
+			audititem.createdate,			audititem.enddate
+			from (select ItemId,CASE    WHEN isnull(ItemContents) THEN 0 else 1 end as  tf ,ItemRelaPersId,u.des   as Name
+			from audititemlist a join system_user u on u.id=a.ItemRelaPersId where u.id= ? )
+			T  join audititem on audititem.id=T.ItemId where ? between createdate and enddate GROUP BY  ItemId,ItemRelaPersId,Name
+
+		</sql>
+	</sqlGroup>
+</sqlGroup>
+
+
+
+
+
+
+
+

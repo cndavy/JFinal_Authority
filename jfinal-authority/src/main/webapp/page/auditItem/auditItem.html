@@ -1,0 +1,208 @@
+@ var head={
+<title>事项管理</title>
+<link rel="stylesheet" href="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/themes/simple/simple.css">
+
+@}; var ctrls= "ng-controller='ItemManageCtrls'" ; var body ={
+
+<div class="easyui-layout" data-options="fit:true,border : false"  >
+	@if( so.hasPermission("/auditItem/add")) {
+	<div  ng-model="so_add" ng-init="so_add=true"></div>
+	@}if( so.hasPermission("/auditItem/edit")) {
+	<div  ng-model="so_edit" ng-init="so_edit=true"></div>
+	@}if( so.hasPermission("/auditItem/delete")) {
+	<div  ng-model="so_delete" ng-init="so_delete=true"></div>
+	@}if( so.hasPermission("/auditItem/view")) {
+	<div  ng-model="so_view" ng-init="so_view=true"></div>
+	@}if( so.hasPermission("/common/file/fileManage")) {
+	<div  ng-model="so_fm" ng-init="so_fm=true"></div>
+	@}
+
+		<div data-options="region:'north',title:'查询条件',border:false" style="height: 120px; overflow: hidden;">
+			<form id="searchForm">
+				<table class="table table-hover table-condensed" style="display: none;">
+					<tr>
+						<th>事项标题</th>
+						<td><input name="a.ItemTitle-*" placeholder="可以模糊查询" class="span2" /></td>
+						<th>事项开始时间</th>
+						<td ><input class="span2 easyui-datebox" name="createdateStart" placeholder="点击选择时间"/></td><td>至</td><td><input class="span2 easyui-datebox" name="createdateEnd" placeholder="点击选择时间"/></td>
+ 			    	</tr>
+					<tr><th>事项结束时间</th>
+						<td>
+							<input class="span2 easyui-datebox"  name="enddateStart"   placeholder="点击选择时间"/></td><td>至</td><td><input class="span2 easyui-datebox" name="enddateEnd" placeholder="点击选择时间"/></td>
+							<th>事项发起人</th>
+						<td>
+							<select   class="easyui-combogrid span2"   id="itemCreaterid" style="width: 140px; height: 29px;"							data-options="" />
+						</td>
+						<td><input name="u.id" type="hidden" id="itemCreaterids" /></td>
+					</tr>
+
+				</table>
+			</form>
+		</div>
+		<div data-options="region:'center',border:false" style="height: auto">
+			<table id="dataGrid" class="table table-hover table-condensed"></table>
+		</div>
+	
+	<div id="toolbar" style="display: none;">
+		 <a ng-show="so_add"  ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'note_add'">添加</a>
+		<a  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">过滤条件</a>
+		<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清空条件</a>
+	
+	</div>
+
+	<div id="menu" class="easyui-menu" style="width: 120px; display: none;">
+	
+	         <div ng-show="so_add" ng-click="addFun();" data-options="iconCls:'pencil_add'" style=" ">增加</div>
+			<div ng-show="so_delete" ng-click="deleteFun();" data-options="iconCls:'pencil_delete'"style=" ">删除</div>
+			<div ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'"style=" ">编辑</div>
+	</div>
+	<!--  dialog -->
+  <div id="dlg" name="dlg"   class="easyui-dialog" style=" width: 650px; height: 350px;padding:5px 10px;overflow:hidden; "
+	   closed="true" buttons="#dlg-buttons"  data-options="resizable:true,modal:true ,fit:true">
+	
+    <div class="easyui-layout" data-options="fit:true,border:false" style="">
+	 <div data-options="region:'center',border:false" title=""  style="">
+		<form id="fm"   method="post" style="">
+
+			<table class="table table-hover table-condensed" style="display:none;overflow: hidden;">
+				 <input name="auditItem.id" type="hidden"  />
+				<tr >
+					<th>事项标题</th>
+					<td colspan="1"><input name="auditItem.ItemTitle" type="text" placeholder="请输入事项名称"  required="true" class="easyui-validatebox span2" data-options="required:true"  /></td>
+
+				</tr>
+				<tr >
+					<th>事项标题列表</th>
+					<td colspan="1"><input name="auditItem.ItemFieldLists" type="text" placeholder="请输入事项标题列表"  required="true" class="easyui-validatebox span2" data-options="required:true"   style="width: 540px; height: 29px;"/></td>
+
+				</tr>
+				<tr>
+				  <div  ng-show="so_fm">
+				 	<th>浏览服务器附件</th>
+					 	<td colspan="4">
+					 	<button type="button" class="btn"  ui-event="{click:'fileManage($event)'}"  ng-click="fileManage()">浏览服务器</button>
+					 </td>
+			      </div>
+
+				</tr>
+                <tr>
+				   <th  >事项开始日期</th>
+				   <td  >
+					   <input    class="easyui-datebox span2" required="true" missingMessage="日期必须填写" editable="false" name="auditItem.createdate" placeholder="点击选择时间"/>
+				   </td>
+				</tr>
+				<tr>   <th>事项结束日期</th>
+				   <td  >
+					   <input   class="easyui-datebox span2" required="true" validType="TimeCheck['auditItem.createdate']" invalidMessage="结束日期必须大于开始日期" editable="false" name="auditItem.enddate" placeholder="点击选择时间"/>
+				   </td>
+
+		    	</tr>
+                 <tr>
+					 <th  style="width: 140px; height: 29px;"> 事项参与人</th>
+					 <td>
+						 <select  class="easyui-combogrid span2" multiple="true" name="ItemWriter" required="true" id="audititemPerson" style="width: 540px; height: 29px;"
+								   disabled="disabled"		  data-options="" />
+
+					 </td>
+					 <td><input name="auditItem.ItemWriter" type="hidden" id="ItemWriterids" /></td>
+				 </tr>
+				<tr>
+					<td colspan="4">
+						<textarea name="auditItem.ItemDesc" id="note" cols="50" rows="5" style="visibility: hidden;"> </textarea></td>
+				</tr>
+				<tr><td>
+					<div id="dlg-buttons">
+						<a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="submit()">确定</a>
+						<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg').dialog('close')">取消</a>
+					</div>
+
+				</td></tr>
+			</table>
+		</form>
+	</div>
+</div>
+  </div>
+
+
+	<div id="dlg2"  class="easyui-dialog" style=" width:450px;height:380px;padding:5px 10px" closed="true" buttons="#dlg-buttons2"  data-options="resizable:true,modal:true  ,fit:true">
+		<div class="easyui-layout" data-options="fit:true,border:false">
+			<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+				<input name="id" type="hidden"  >
+				<table class="table table-hover table-condensed">
+					<tr><td colspan="4">
+						<textarea   id="note2" cols="50" rows="5" style="visibility: hidden;"> </textarea></td></tr>
+				</table>
+			</div>
+			<div id="dlg-buttons2">
+				<a href="javascript:void(0)" class="easyui-linkbutton"  onclick="javascript:$('#dlg2').dialog('close')">取消</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="dlg-itemWriter" class="easyui-dialog" style="fit:true"
+		 closed="true" buttons="dlg-buttons-itemWriter"  data-options="fit:true">
+
+			<form id="fmdlgitemWriter" method="post"     data-options="">
+				<input name="auditItem.id" type="hidden"  />
+				<table   id="tbl_itemWriter"   data-options="">
+
+ 				</table>
+				<div id="dlg-buttons-itemWriter" >
+					<a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="saveItems()">保存</a>
+					<a href="javascript:void(0)" class="easyui-linkbutton"
+					   onclick="javascript:$('#dlg-itemWriter').dialog('close')">取消</a>
+				</div>
+			</form>
+ 	</div>
+	<div id="dlg-detail" class="easyui-dialog" style="fit:true"
+		 closed="true" buttons="dlg-buttons-detail"  data-options="fit:true">
+		<div class="easyui-layout" data-options="fit:true,border:false" style="">
+			<div  region="center" data-options=" border:false" title=""  style="">
+		     <table   id="tbl_detail"   data-options="">
+		     	<tr><td colspan="4">
+				<textarea   id="detail_note" cols="50" rows="5" style="visibility: hidden;"> </textarea></td></tr>
+
+	    	 </table>
+           </div>
+			<div id="dlg-buttons-detail" region="south" split="true" style="height:100px;" >
+				<a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="detailFun()">确定</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+				   onclick="javascript:$('#dlg-detail').dialog('close')">取消</a>
+			</div>
+			</div>
+
+	</div>
+	<div id="dlg-detail-download" class="easyui-dialog"   closed="true"  style="fit:true">
+		<form method="post"  data-options="">
+			<input name="id" type="hidden"  />
+			<input name="title" type="hidden"  />
+			<input name="ItemFieldLists" type="hidden"  />
+		</form>
+	</div>
+	<div ng-init="load()"></div>
+</div>  
+@};var js={
+<script  type="text/javascript">
+
+ 	function formatterFunItemManage(value, row, index) {
+		var str = '';
+		@if( so.hasPermission("/auditItem/view"))
+			str += $.formatString('<img   onclick="$(this).scope().viewFun(\'{0}\')"  src="{1}" title="查看"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
+		@if( so.hasPermission("/auditItem/edit"))
+			str += $.formatString('<img  onclick="$(this).scope().editFun(\'{0}\')"  src="{1}" title="编辑"/> ', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_edit.png');
+		@if( so.hasPermission("/auditItem/delete"))
+			str += $.formatString('<img  onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="删除"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_delete.png');
+		@if( so.hasPermission("/auditItem/itemWriter"))
+			str += $.formatString('<img   onclick="$(this).scope().itemWriterFun(\'{0}\')"  src="{1}" title="填写"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
+		@if( so.hasPermission("/auditItem/itemWriterExport"))
+			str += $.formatString('<img   onclick="$(this).scope().itemWriterExport(\'{0}\')"  src="{1}" title="导出"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/table/table_save.png');
+		 return str;
+}
+
+</script>
+<script type="text/javascript" src="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/kindeditor-all-min.js" charset="utf-8"></script>
+<script src="${CONTEXT_PATH}/static/app/ctrls/audititem-ctrls.js" type="text/javascript" charset="utf-8" ></script>
+<script src="${CONTEXT_PATH}/static/js/easyui-datagrid-ext.js" type="text/javascript" charset="utf-8" ></script>
+<script src="${CONTEXT_PATH}/static/js/jq-ext-diy.js" type="text/javascript" charset="utf-8" ></script>
+
+ @}; include("../layout/_layout.html",{head:head,body:body,js:js,ctrls:ctrls}) {}
