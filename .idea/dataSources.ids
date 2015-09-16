@@ -29,7 +29,7 @@
     <table name="audititem" schema="" catalog="han" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="ItemTitle" sqlType="VARCHAR" precision="600" scale="0" nullable="true" jdbcType="12"/>
-      <column name="ItemFieldLists" sqlType="VARCHAR" precision="600" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ItemFieldLists" sqlType="VARCHAR" precision="6000" scale="0" nullable="true" jdbcType="12"/>
       <column name="ItemDesc" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <column name="ItemCreaterId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="ItemDocType" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
@@ -45,8 +45,9 @@
       <column name="ItemId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="ItemContents" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <column name="ItemRelaPersId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="serialId" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
-      <primary-key name="PRIMARY" columns="ItemId,ItemRelaPersId,serialId"/>
+      <column name="serialId" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
+      <column name="serialNum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="ItemId,ItemRelaPersId,serialNum"/>
       <foreign-key name="audititemlist_ibfk_1" columns="ItemId" ref-table="audititem" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="audititemlist_ibfk_2" columns="ItemRelaPersId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
@@ -70,6 +71,7 @@
       <column name="planSts" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="uId" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="prjId" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Memo" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="auditprjplan_ibfk_1" columns="uId" ref-table="system_user" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="auditprjplan_ibfk_2" columns="prjId" ref-table="auditprj" ref-schema="" ref-catalog="han" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>

@@ -3,6 +3,7 @@ package com.ccb.project.model;
 import com.jayqqaa12.jbase.jfinal.ext.model.Db;
 import com.jayqqaa12.jbase.jfinal.ext.model.EasyuiModel;
 import com.jfinal.ext.plugin.tablebind.TableBind;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,7 +39,10 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
                         AuditItemList cell=new AuditItemList();
                         cell.set("ItemRelaPersId",personId);
                         cell.set("ItemId",itemId);
+                        itemName[x]=  StringEscapeUtils.unescapeHtml(itemName[x]);
                         cell.set("serialId",itemName[x]);
+                        cell.set("serialNum",x);
+
                         perMap.put(personId+","+x,cell);
                     }
                 }
@@ -47,22 +51,23 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
                     for (int y=0;y<itemContent.length;y++){
                     perMap.get(personId+","+y).set("ItemContents",itemContent[y]);
                 }
-                for (AuditItemList c :perMap.values()){
-                    AuditItemList.dao.deleteByMultId(c);
-                    c.save();
-                }
+
 
                 }
 
             }
         }
+        for (AuditItemList c :perMap.values()){
+            AuditItemList.dao.deleteByMultId(c);
+            c.save();
+        }
     }
 
     private void deleteByMultId(AuditItemList cell) {
-    String sql=sql("auditItem.list.deleteByItemIdAndPersIdAndSerialId");
+    String sql=sql("auditItem.list.deleteByItemIdAndPersIdAndSerialNum");
         //cell.delete();
        Object[]ss= new Object[]{cell.get("ItemId").toString(),cell.get("ItemRelaPersId").toString(),
-               cell.get("serialId").toString()};
+               cell.get("serialNum").toString()};
 
         Db.batch(sql,new Object[][]{ss},1);
 

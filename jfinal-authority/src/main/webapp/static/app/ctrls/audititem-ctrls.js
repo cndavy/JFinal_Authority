@@ -26,6 +26,7 @@ var perlist=$('#itemCreaterid').combogrid({
 		$('#itemCreaterids').attr('value',n.toString()) ;
 	}
 });
+perlist.combogrid('disableTextbox',{stoptype:'readonly',stopArrowFocus:true});
 var perlist1=$('#audititemPerson').combogrid({
 	url : PATH+'/auditItem/getPerson',
 	checked:true,
@@ -47,6 +48,7 @@ var perlist1=$('#audititemPerson').combogrid({
 		$('#ItemWriterids').attr('value',n.toString()) ;
 	}
 });
+perlist1.combogrid('disableTextbox',{stoptype:'readonly',stopArrowFocus:true});
 $('#dataGrid').datagrid({
 	url : PATH+'/auditItem/list',
 	fit : true,
@@ -108,6 +110,11 @@ $('#dataGrid').datagrid({
 		width : 200,
 		sortable : true,
 		formatter: unitformatter
+	},{
+		field : 'ItemDesc',
+		title : 'ItemDesc',
+		width : 150,
+		hidden : true
 	}
 		,{
 		field : 'action',
@@ -157,7 +164,7 @@ function unitformatter(value, rowData, rowIndex) {
 			}
 		}
 	}
-	return result.substring(1,result.length-1);
+	return result.substring(1,result.length);
 
 }
 function endEdit(data){
@@ -170,33 +177,7 @@ function endEdit(data){
 
 
 var	rainGrid = $("#tbl_itemWriter");
-/*function showGrid() {
-	var options = {
-		width: gridWidth,
-		height: gridHeight,
-		url: PATH+'/auditItem/GetItems',
-		queryParams:getParams(),
-		rownumbers : true,
-		loadMsg:"正在加载数据,请稍候...",
-		pagination: true,
-		page:1,
-		pageSize: 20,
-		pageList: [10, 20, 30, 40, 50, 100, 500, 1000, 5000],
-		loadFilter:dataFilter
-	};
 
-	rainGrid.datagrid(options);
-}*/
-/*function dataFilter(data) {
-	if (data.data[0].rows.length == 0) {
-		$.messager.alert("结果", "没有数据!", "info", null);
-	}
-	var options = rainGrid.datagrid("options");//取出当前datagrid的配置
-	options.columns = eval(data.columns);//添加服务器端返回的columns配置信息
-	rainGrid.datagrid("createHeader", options);//调用扩展方法，创建表格列
-	rainGrid.datagrid("resize");//重新布局datagrid，因为上面扩展方法调用后，会有一些布局上的小问题
-	return data.data[0];
-}*/
 MainApp.controller('ItemManageCtrls', [ '$scope', function($scope) {
 $scope.load=function(){
 	$scope.createNote();
@@ -234,7 +215,7 @@ $scope.personFun=function(id){
 		url=PATH+'/auditItem/person';
 	}
 };
-	$scope.itemWriterFun=function(id) {
+$scope.itemWriterFun=function(id) {
 
 		if (id != undefined)$('#dataGrid').datagrid('selectRecord', id);
 
@@ -244,13 +225,12 @@ $scope.personFun=function(id){
 			$.post(PATH + '/auditItem/GetItems',node,
 				function(data,textStatus) {
 					if (textStatus == 'success') {
-						$('#tbl_itemWriter').empty();
+						$('#tbl_itemWriter').empty().append('<td><input name="auditItem.id" type="hidden"  /></td>');
 						showDialog('#dlg-itemWriter', "填写事项");
 						loadFrom('#fmdlgitemWriter', node);
 
 						for (var item in data){
-// {ItemRelaPersId: 3, ItemContents: "a", serialId: "a", ItemId: 2}
-						var arrName =data[item]['des'];
+ 						var arrName =data[item]['des'];
 						var arrColumnName=data[item]['serialId']	;
 						var arrValue=	data[item]['ItemContents']	;
 							if (!arrValue)arrValue='';
@@ -291,8 +271,7 @@ $scope.personFun=function(id){
 $scope.detailFun=function(id){
 	$scope.detail_editor.sync();
 	var html = $scope.detail_editor.html();
-
-	$scope.current_detail.attr("value",html);
+	$scope.current_detail.val(htmlencode(html));
 	$('#dlg-detail').dialog('close');
 }
 	$scope.itemWriterExport=function(id){
@@ -303,12 +282,21 @@ $scope.detailFun=function(id){
 			$('#dlg-detail-download form input[name=id] ').attr("value",node.id);
 			$('#dlg-detail-download form input[name=title]' ).attr("value",node.ItemTitle);
 			$('#dlg-detail-download form input[name=ItemFieldLists] ' ).attr("value",node.ItemFieldLists);
-			$('#dlg-detail-download form' ).form("submit",{"url":url });
+			$('#dlg-detail-download form' ).form("submit",{"url":url,
+				success: function (result) {
+					result = $.parseJSON(result);
 
-			/*	$.post(url,{"id":node.id,"title":node.ItemTitle,"ItemFieldLists":node.ItemFieldLists},
-				function(response,status,xhr){
+					if (result.code == 200) {
 
-				});*/
+					}else {
+						$.messager.alert('提示',result.msg);
+					}
+
+				}
+
+			});
+
+
 		}
 
 	}
@@ -328,7 +316,7 @@ $scope.saveItems=function() {
 
 							if (result.code == 200) {
 								$('#dlg-itemWriter').dialog('close');
-							//	$('#dataGrid').datagrid('reload');
+
 							}else {
 								$.messager.alert('提示',result.msg);
 							}
@@ -346,7 +334,9 @@ $scope.createNote=function(){
 			items : [ 'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/', 'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','multiimage', 'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink' ],
 			uploadJson : PATH+'/common/file/upload',
 			fileManagerJson : PATH+'/common/file/fileManage',
-			allowFileManager : true
+			allowFileManager : true,
+		afterBlur: function(){this.sync();}
+
 		});
 };
 
@@ -381,7 +371,7 @@ $scope.deleteFun=function(id) {
 		var rows = $('#dataGrid').datagrid('getSelections');
 		id = rows[0].id;
 	}
-	parent.$.messager.confirm('询问', '您是否要删除当前项目？', function(b) {
+	parent.$.messager.confirm('询问', '您是否要删除当前事项？', function(b) {
 		if (b) {
 			parent.$.messager.progress({
 				title : '提示',
@@ -392,6 +382,8 @@ $scope.deleteFun=function(id) {
 			}, function(result) {
 				if (result.code==200) {
 					$('#dataGrid').datagrid('reload');
+				} else {
+					$.messager.alert('提示',result.msg);
 				}
 				parent.$.messager.progress('close');
 			}, 'JSON');
@@ -424,10 +416,15 @@ $scope.editFun=function(id) {
 		$('#fm table').css("display",null)
 		if(node.ItemFieldLists) $('#fm table  input[name="auditItem.ItemFieldLists"]').attr("disabled","disabled");
 		else $('#fm table  input[name="auditItem.ItemFieldLists"]').removeAttr("disabled");
-		if(node.ItemDesc) KindEditor.html('#note',node.ItemDesc);
+		if(node.ItemDesc)
+			$scope.editor.html(node.ItemDesc);
 		if(node.ItemWriter) {
 			$('#ItemWriterids').attr('value',node.ItemWriter) ;
 			$('#audititemPerson').combogrid('setValues',node.ItemWriter.split(','));
+			$('#audititemPerson').combogrid('disable');
+		}else {
+			$('#audititemPerson').combogrid('enable');
+			$('#audititemPerson').combogrid('disableTextbox',{stoptype:'readonly',stopArrowFocus:true});
 		}
 		$("").layout("fullScreen");
 		showDialog('#dlg','编辑事项');
@@ -438,6 +435,7 @@ $scope.editFun=function(id) {
 $scope.addFun=function() {
 	  $('#fm').form('clear');
 	  $scope.editor.html('');
+	$('#audititemPerson').combogrid('enable');
 	  $('#fm table  input[name="auditItem.ItemFieldLists"]').removeAttr("disabled");
 	  showDialog('#dlg','添加事项');
 	  url=PATH+'/auditItem/add';
@@ -446,12 +444,11 @@ $scope.addFun=function() {
 
 
 $scope.submit=function(){
-	
- 	$scope.editor.sync();
-	var html = $scope.editor.text();
-	$("#note")[0].innerText=html;
-	//alert(html);
-      $("#fm").form('submit',{
+	$scope.editor.sync();
+	var html = KindEditor('#note').val();
+	//$("#note")[0].innerHtml=html;
+    $('input[name="auditItem.ItemDesc"]').val(htmlencode(html));;
+    $("#fm").form('submit',{
                 url: url,
                 success: function(result){
                  result= $.parseJSON(result);

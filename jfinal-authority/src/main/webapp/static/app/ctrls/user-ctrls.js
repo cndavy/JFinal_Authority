@@ -91,9 +91,28 @@ $('#role_ids').combotree({
 	onLoadSuccess : function() {
 		parent.$.messager.progress('close');
 	},
-	cascadeCheck : false,
+	cascadeCheck : false
 });
 
+var uploadevent=function(status, picUrl, callbackdata) {
+	//alert(callbackdata);
+	status += '';
+	switch (status) {
+		case '1':
+			var time = new Date().getTime();
+			var filename48 = PATH+picUrl + '_48.jpg';
+			var filename48_old =  picUrl + '_48.jpg';
+			var path= filename48+ "?"+ time;
+			$('#dlg-img').dialog('close');
+			$('#icon').attr('src',path);
+
+			$("input[name='user.icon']").val(filename48_old);
+			break;
+		case '0':
+			window.location.reload();
+			break;
+	}
+};
 
 
 MainApp.controller('UserCtrls', [ '$scope', function($scope) {
@@ -209,7 +228,7 @@ $scope.editFun=function(id) {
 		
 		$('#username').attr('readonly','readonly');
 		
-		$('#icon').attr('src',node.icon);
+		$('#icon').attr('src',PATH+node.icon);
 		if(node.des)$('#des').text(node.des);
 		$('#pwd').val('');
 		showDialog('#dlg','编辑用户');
@@ -230,7 +249,7 @@ $scope.addFun=function() {
 
 
 $scope.submit=function(fm,dlg){
-	
+
 	
       $(fm).form('submit',{
                 url: url,

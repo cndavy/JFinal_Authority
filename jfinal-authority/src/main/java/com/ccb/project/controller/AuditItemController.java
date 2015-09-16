@@ -4,6 +4,7 @@ import com.ccb.project.model.AuditItem;
 import com.ccb.project.model.AuditItemList;
 import com.ccb.project.validator.AuditItemAddValidator;
 import com.ccb.project.validator.AuditItemEditValidator;
+import com.ccb.project.validator.AuditItemOwnerValidator;
 import com.ccb.project.vo.SerialRecord;
 import com.jayqqaa12.common.Consts;
 import com.jayqqaa12.common.UrlConfig;
@@ -15,6 +16,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.ext.route.ControllerBind;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.activerecord.tx.Tx;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -52,7 +54,8 @@ public class AuditItemController extends EasyuiController<AuditItem>
 	{  try {
 		Integer id = ((User) ShiroExt.getSessionAttr(Consts.SESSION_USER)).getId();
 		AuditItem item = (AuditItem) getModel();
-
+	 	item.set("ItemFieldLists", StringEscapeUtils.unescapeHtml(item.get("ItemFieldLists")));
+		item.set("ItemDesc",StringEscapeUtils.unescapeHtml(item.get("ItemDesc")));
 		item.set("ItemCreaterId", id);
 
 		renderJsonResult(item.createNewItem());
@@ -63,13 +66,14 @@ public class AuditItemController extends EasyuiController<AuditItem>
 
 	}
 
-	@Before(value = {Tx.class,AuditItemEditValidator.class })
+	@Before(value = {Tx.class,AuditItemOwnerValidator.class ,AuditItemEditValidator.class})
 	public void edit()
-	{
-		renderJsonResult(getModel().update())  ;
+	{   AuditItem item=getModel();
+		item.set("ItemDesc", StringEscapeUtils.unescapeHtml(item.get("ItemDesc")));
+		renderJsonResult(item.update())  ;
 
 	}
-	@Before(Tx.class)
+	@Before(value ={Tx.class,AuditItemOwnerValidator.class})
 	public void delete() throws Exception
 	{
 
@@ -85,9 +89,11 @@ public class AuditItemController extends EasyuiController<AuditItem>
 		renderJsonResult(true);
 			//render("itemWriter.html");
 	}
+	@Before(value ={ AuditItemOwnerValidator.class})
 	public void itemWriterExport() throws UnsupportedEncodingException {
 		List<AuditItemList> result=AuditItemList.dao.itemWriteExport(getParaToInt("id"));
-		String[]ItemFieldLists=("#_填表人_#|" +getPara("ItemFieldLists")).split("\\|");
+		String[]ItemFieldLists=StringEscapeUtils.unescapeHtml("#_填表人_#|" +getPara("ItemFieldLists")).split("\\|");
+
 		List<Record> export=new ArrayList<>();
 		Record record=null;
 		Integer id=null;
@@ -104,7 +110,8 @@ public class AuditItemController extends EasyuiController<AuditItem>
 			if (a.get("ItemContents")==null){
 				record.set(a.get("serialId"), "");
 			} else {
-				record.set(a.get("serialId"),a.get("ItemContents"));
+				String value=StringEscapeUtils.unescapeHtml(a.get("ItemContents"));
+				record.set(a.get("serialId"),value);
 			}
 
 

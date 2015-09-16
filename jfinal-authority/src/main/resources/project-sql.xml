@@ -17,7 +17,7 @@
 			FROM `auditprj` left join system_user on system_user.id = auditprj.prjManager
 			 </sql>
 		<sql id="getPersonInPrjList" >
-			select u.id as uId ,u.name ,u.des, a.id    ,a.bgnDate,a.endDate
+			select u.id as uId ,u.name ,u.des, a.id    ,a.bgnDate,a.endDate,a.Memo
 			from system_user u INNER JOIN
 			(auditprjplan a INNER  join auditprj p on a.prjId=p.id and  p.id=?) on uId=u.id
 		</sql>

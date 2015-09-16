@@ -63,13 +63,13 @@
 			<div ng-show="so_edit" ng-click="editFun();" data-options="iconCls:'pencil'"style=" ">编辑</div>
 	</div>
 	<!--  dialog -->
-  <div id="dlg" name="dlg"   class="easyui-dialog" style=" width: 650px; height: 350px;padding:5px 10px;"
+  <div id="dlg" name="dlg"   class="easyui-dialog" style=" width: 650px; height: 350px;padding:5px 10px;overflow:hidden;"
 	   closed="true" buttons="#dlg-buttons"  data-options="resizable:true,modal:true ,fit:true  ">
 	
-    <div class="easyui-layout" data-options="fit:true,border:false " style="overflow: hidden;">
-	 <div data-options="region:'center',border:false" title=""  style="overflow: hidden;">
+    <div class="easyui-layout" data-options="fit:true,border:false " style=" ">
+	 <div data-options="region:'center',border:false" title=""  style=" ">
 		<form id="fm"   method="post">
-			<table class="table table-hover table-condensed"  style="display: none ;overflow: hidden;" >
+			<table class="table table-hover table-condensed"  style="display: none" >
 				<tr><td><input name="prj.id" type="hidden"  /></td></tr>
 				<tr >
 					<th>项目名称</th>
@@ -118,10 +118,10 @@
   </div>
 
 	<!--  dialog  view  -->
-  <div id="dlg2"  class="easyui-dialog" style=" width:450px;height:380px;padding:5px 10px" closed="true" buttons="#dlg-buttons2"  data-options="resizable:true,modal:true  ,fit:true">
+  <div id="dlg2"  class="easyui-dialog" style=" width:450px;height:380px;padding:5px 10px " closed="true" buttons="#dlg-buttons2"  data-options="resizable:true,modal:true  ">
    <div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
-		<input name="prj.id" type="hidden"  />
+	<div data-options="region:'center',border:false" title="" style=" ">
+		<!--<input name="prj.id" type="hidden"  />-->
 			<table class="table table-hover table-condensed">
 				<tr><td colspan="4">
 					<textarea   id="note2" cols="50" rows="5" style="visibility: hidden;"> </textarea></td></tr>
@@ -170,7 +170,7 @@
 					 <tr>
 						 <th>项目时间</th>
 					  <td ><input class="easyui-datebox" name="prj.createdate" placeholder="点击选择时间"   />至<input class="easyui-datebox" name="prj.planenddate" placeholder="点击选择时间"  /></td>
- 						 <th>项目发起人</th>
+ 						 <th>项目参与人</th>
 						 <td>
 							 <select   class="easyui-combogrid span2"   id="prjManagerid" style="width: 140px; height: 29px;"
 																									 data-options="" />
@@ -202,7 +202,7 @@
 	function formatterFunPrjManage(value, row, index) {
 		var str = '';
 		@if( so.hasPermission("/project/view")) 
-			str += $.formatString('<img   ng-click="viewFun(\'{0}\')"  src="{1}" title="项目查看"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
+			str += $.formatString('<img   onclick="$(this).scope().viewFun(\'{0}\')"  src="{1}" title="项目查看"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
 		@if( so.hasPermission("/project/edit")) 
 			str += $.formatString('<img  onclick="$(this).scope().editFun(\'{0}\')"  src="{1}" title="项目编辑"/> ', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_edit.png');
 		@if( so.hasPermission("/project/delete")) 
@@ -210,12 +210,14 @@
 		@if( so.hasPermission("/project/endprj"))
 			str += $.formatString('<img   onclick="$(this).scope().endPrjFun(\'{0}\');" src="{1}" title="项目终止"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/bomb.png');
         @if( so.hasPermission("/projectPlan/chgperson"))
-		str += $.formatString('<img  onclick="$(this).scope().personFun(\'{0}\');" src="{1}" title="项目人员管理"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/status_online.png');
-			return str;
+		  str += $.formatString('<img  onclick="$(this).scope().personFun(\'{0}\');" src="{1}" title="项目人员管理"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/status_online.png');
+ @
+		return str;
 }
 
 </script>
-<script type="text/javascript" src="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/kindeditor-all-min.js" charset="utf-8"></script>
+
+<script  src="${CONTEXT_PATH}/static/js/kindeditor-4.1.10/kindeditor-all-min.js"  type="text/javascript" charset="utf-8"></script>
 <script src="${CONTEXT_PATH}/static/app/ctrls/prjmanage-ctrls.js" type="text/javascript" charset="utf-8" ></script>
 
  @}; include("../layout/_layout.html",{head:head,body:body,js:js,ctrls:ctrls}) {}

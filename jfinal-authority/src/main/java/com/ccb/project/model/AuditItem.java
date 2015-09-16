@@ -73,15 +73,19 @@ public class AuditItem extends EasyuiModel<AuditItem> {
         String []listFields=((String)this.get("ItemFieldLists")).split("\\|");
        String [] perIds=null;
          perIds=this.get("ItemWriter").toString().split(",");
-        for (String serialId :listFields)
-          for(String perId:perIds)  {
-                AuditItemList a=new AuditItemList();
-                a.set("ItemId",itemId);
-                a.set("ItemRelaPersId",perId);
-                a.set("serialId",serialId);
-                a.set("ItemContents","");
+        for (int i=0;i<listFields.length;i++)  {
+            String serialId =listFields[i];
+            for (String perId : perIds) {
+                AuditItemList a = new AuditItemList();
+                a.set("ItemId", itemId);
+                a.set("ItemRelaPersId", perId);
+                a.set("serialNum",i);
+                a.set("serialId", serialId);
+                a.set("ItemContents", "");
                 a.save();
             }
+
+        }
         return true;
     }
 

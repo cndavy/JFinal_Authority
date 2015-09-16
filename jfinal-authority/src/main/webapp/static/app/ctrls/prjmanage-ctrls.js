@@ -126,20 +126,20 @@ var pergrd=$('#personselectGrid').datagrid({
 	pageList : [ 8, 15, 20, 25 ],
 	sortName : 'uid',
 	sortOrder : 'desc',
-	checkOnSelect : false,
-	selectOnCheck : false,
+
+	selectOnCheck : true,
 	queryParams:{},
 	nowrap : false,
 	striped : true,
-	rownumbers : true,
-	singleSelect : false,
-
+	singleSelect:false,
 	frozenColumns :[[ {
 		field : 'id',
 		title : '编号',
 		width : 150,
 		hidden : true
-	}, {
+	},
+		{field:'ck',checkbox:true},
+		{
 		field: 'uId',
 		title: '项目参与人',
 		width: 100,
@@ -168,7 +168,7 @@ var pergrd=$('#personselectGrid').datagrid({
 	columns :[[{
 		field : 'bgnDate',
 		title : '参与开始日期',
-		width : 120,
+		width : 60,
 		sortable : true,
 		editor: {
 			type:'datebox'
@@ -176,12 +176,24 @@ var pergrd=$('#personselectGrid').datagrid({
 	}, {
 		field : 'endDate',
 		title : '参与结束日期',
-		width : 120,
+		width :60,
 		sortable : true,
 		editor: {
 			type:'datebox'
 		}
-	}]],
+
+	},
+		{
+			field : 'Memo',
+			title : '备注',
+			width :60,
+			sortable : true,
+			editor:{
+				type:'textarea'
+			}
+		}
+
+			 ]],
 	toolbar:[
 		{ text: '添加', iconCls: 'database_add', handler: function () {
              if (editRow != undefined) {
@@ -260,7 +272,7 @@ var pergrd=$('#personselectGrid').datagrid({
 			text: '删除', iconCls: 'database_delete', handler: function () {
 				var row = pergrd.datagrid('getSelections');
 				if (row.length > 0) {
-					for (var i = 0; i < row.length; i++) {
+					for (var i = row.length-1; i >=0; i--) {
 						var index = pergrd.datagrid('getRowIndex', row[i]);
 						pergrd.datagrid('deleteRow', index);
 					}
@@ -457,7 +469,12 @@ $scope.createNote=function(){
 			items : [ 'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste', 'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript', 'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/', 'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','multiimage', 'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak', 'anchor', 'link', 'unlink' ],
 			uploadJson : PATH+'/common/file/upload',
 			fileManagerJson : PATH+'/common/file/fileManage',
-			allowFileManager : true
+			allowFileManager : true,
+		afterBlur: function(){this.sync();},
+		afterSelectFile:function(url){
+			console.log(url)
+
+		}
 		});
 };
 
@@ -473,41 +490,11 @@ $scope.createReadOnlyNote=function(){
 	KindEditor.instances[1].readonly(true);
 };
 
-/*
-$scope.statusFun=function(id){
-	if (id != undefined)$('#dataGrid').datagrid('selectRecord', id);
-	
-	var node = $('#dataGrid').datagrid('getSelected');
-	if (node) {
-		loadFrom('#fm-status',node);
-		showDialog('#dlg-status','修改状态');
-		url=PATH+'/project/status';
-	}
-	
-};*/
-/*
 
-$scope.submitStatus=function(){
-	
-	  $('#fm-status').form('submit',{
-          url: url,
-          success: function(result){
-           result= $.parseJSON(result);
-           if(result.code==200){
-            $('#dlg-status').dialog('close'); 
-            $('#dataGrid').datagrid('reload');
-               $('#layout_west_tree').tree('reload');
-              	   $('#pid').combotree('reload');
-            }
-          else {
-            $.messager.alert('提示',result.msg);
-          }
-       }
- });	
-	
-};
 
-*/
+
+
+
 
 $scope.deleteFun=function(id) {
 	if (id == undefined) {
@@ -550,12 +537,11 @@ if (id != undefined)$('#dataGrid').datagrid('selectRecord', id);
 $scope.editFun=function(id) {
 	
 	if (id != undefined)$('#dataGrid').datagrid('selectRecord', id);
-	
 	var node = $('#dataGrid').datagrid('getSelected');
 	if (node) {
-
 		loadFrom('#fm',node);
 		 if(node.des) KindEditor.html('#note',node.des);
+		$("").layout("fullScreen");
 		showDialog('#dlg','编辑项目');
 		url=PATH+'/project/edit';
 	}
@@ -572,10 +558,10 @@ $scope.addFun=function() {
 
 $scope.submit=function(){
 	
- 	$scope.editor.sync();
+
 	var html = $scope.editor.text();
-	$("#note")[0].innerText=html;
-	//alert(html);
+	$("#note")[0].innerHtml=html;
+
       $("#fm").form('submit',{
                 url: url,
                 success: function(result){

@@ -229,7 +229,7 @@ public void listIdleByPerson()
 		String title=getPara("title");
 		String num =getPara("_");
 	}
-	public void ViewCalendar ( ){
+	public void ViewCalendar (){
 		//getParaToInt(0);
 		String id=getPara();
 		String	start=getPara("start");

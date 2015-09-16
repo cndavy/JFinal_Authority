@@ -1,22 +1,14 @@
 package com.jayqqaa12.jbase.util.upload;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.jayqqaa12.jbase.util.Txt;
 import com.jayqqaa12.jbase.util.Validate;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class KindEditor
 {
@@ -42,10 +34,11 @@ public class KindEditor
 				String ext = Txt.getExt(file.getFileName());
 
 				if (Arrays.asList(FILE_EXT).contains(ext))
-				{
+				{ // c.getRequest().getContextPath();
+
 					String newName = System.currentTimeMillis() + "." + ext;
 					file.getFile().renameTo(new File(file.getSaveDirectory() + "/" + newName));
-					info.put("url", UPLOAD_PATH + dir + "/" + newName);
+					info.put("url", c.getRequest().getContextPath()+UPLOAD_PATH + dir + "/" + newName);
 					info.put("error", 0);
 				}
 				else
@@ -77,7 +70,7 @@ public class KindEditor
 
 		String rootPath = req.getRealPath(UPLOAD_PATH);
 		String order = req.getParameter("order") != null ? req.getParameter("order").toLowerCase() : "name";
-		String rootUrl = UPLOAD_PATH;
+		String rootUrl = req.getContextPath()+UPLOAD_PATH;
 		// 图片扩展名
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
 

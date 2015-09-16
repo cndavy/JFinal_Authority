@@ -65,7 +65,8 @@
 		<form id="fm"   method="post" style="">
 
 			<table class="table table-hover table-condensed" style="display:none;overflow: hidden;">
-				 <input name="auditItem.id" type="hidden"  />
+
+				<tr><td><input name="auditItem.id" type="hidden"  /></td></tr>
 				<tr >
 					<th>事项标题</th>
 					<td colspan="1"><input name="auditItem.ItemTitle" type="text" placeholder="请输入事项名称"  required="true" class="easyui-validatebox span2" data-options="required:true"  /></td>
@@ -101,14 +102,15 @@
 					 <th  style="width: 140px; height: 29px;"> 事项参与人</th>
 					 <td>
 						 <select  class="easyui-combogrid span2" multiple="true" name="ItemWriter" required="true" id="audititemPerson" style="width: 540px; height: 29px;"
-								   disabled="disabled"		  data-options="" />
+								  	  data-options="" />
 
 					 </td>
 					 <td><input name="auditItem.ItemWriter" type="hidden" id="ItemWriterids" /></td>
 				 </tr>
 				<tr>
 					<td colspan="4">
-						<textarea name="auditItem.ItemDesc" id="note" cols="50" rows="5" style="visibility: hidden;"> </textarea></td>
+						<textarea   id="note" cols="50" rows="5" style="visibility: hidden;"></textarea></td>
+					    <input name="auditItem.ItemDesc"  type="hidden"   />
 				</tr>
 				<tr><td>
 					<div id="dlg-buttons">
@@ -143,9 +145,9 @@
 		 closed="true" buttons="dlg-buttons-itemWriter"  data-options="fit:true">
 
 			<form id="fmdlgitemWriter" method="post"     data-options="">
-				<input name="auditItem.id" type="hidden"  />
-				<table   id="tbl_itemWriter"   data-options="">
 
+				<table   id="tbl_itemWriter"   data-options="">
+					<td><input name="auditItem.id" type="hidden"  /></td>
  				</table>
 				<div id="dlg-buttons-itemWriter" >
 					<a href="javascript:void(0)" class="easyui-linkbutton"   ng-click="saveItems()">保存</a>
@@ -196,7 +198,8 @@
 			str += $.formatString('<img   onclick="$(this).scope().itemWriterFun(\'{0}\')"  src="{1}" title="填写"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
 		@if( so.hasPermission("/auditItem/itemWriterExport"))
 			str += $.formatString('<img   onclick="$(this).scope().itemWriterExport(\'{0}\')"  src="{1}" title="导出"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/table/table_save.png');
-		 return str;
+	@
+		 	 return str;
 }
 
 </script>

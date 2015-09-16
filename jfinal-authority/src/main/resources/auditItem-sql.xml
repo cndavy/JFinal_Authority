@@ -18,21 +18,21 @@
 		<sql id="selectByItemIdAndPersId">
 			select a.*,u.des  from audititemlist a join system_user u on u.id=a.ItemRelaPersId
 			where   a.ItemId = ? and a.ItemRelaPersId in  ( ## )
-			order by a.ItemRelaPersId
+			order by a.ItemRelaPersId  ,a.serialNum asc
 		</sql>
 		<sql id="insertByItemIdAndPersId">
 			insert into     audititemlist  (ItemId,ItemContents,ItemRelaPerId,serialId) values(?,?,?,?)
 
 		</sql>
-		<sql id="deleteByItemIdAndPersIdAndSerialId">
-			delete  from audititemlist   where   ItemId = ? and ItemRelaPersId = ? and serialId = ?
+		<sql id="deleteByItemIdAndPersIdAndSerialNum">
+			delete  from audititemlist   where   ItemId = ? and ItemRelaPersId = ? and serialNum = ?
 		</sql>
 		<sql id="deleteItemListByItemId">
 			delete  from audititemlist   where   ItemId = ?
 		</sql>
 		<sql id="selectAuditListByItemId">
 			select a.*,u.des  from audititemlist a join system_user u on u.id=a.ItemRelaPersId
-			where   a.ItemId = ?  order by  a.ItemRelaPersId
+			where   a.ItemId = ?  order by  a.ItemRelaPersId ,a.serialNum asc
 		</sql>
 	</sqlGroup>
 	<sqlGroup name="todo">

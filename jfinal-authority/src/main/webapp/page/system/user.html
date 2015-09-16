@@ -187,24 +187,6 @@
 
 <script type="text/javascript">
 
-var uploadevent=function(status, picUrl, callbackdata) {
-		//alert(callbackdata);
-	status += '';
-	switch (status) {
-	case '1':
-		var time = new Date().getTime();
-		var filename48 = picUrl + '_48.jpg';
-		var path= filename48+ "?"+ time;
-		 $('#dlg-img').dialog('close'); 
-		 $('#icon').attr('src',path);
-		 
-		 $("input[name='user.icon']").val(filename48);
-		break;
-	case '0':
-		window.location.reload();
-		break;
-	}
-};
 
 
 var formatterFun = function(value, row, index) {

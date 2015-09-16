@@ -181,7 +181,7 @@ var pergrd=$('#personselectGrid').datagrid({
 	columns :[[{
 		field : 'bgnDate',
 		title : '参与开始日期',
-		width : 120,
+		width : 60,
 		sortable : true,
 		editor: {
 			type:'datebox'
@@ -189,12 +189,21 @@ var pergrd=$('#personselectGrid').datagrid({
 	}, {
 		field : 'endDate',
 		title : '参与结束日期',
-		width : 120,
+		width : 60,
 		sortable : true,
 		editor: {
 			type:'datebox'
 		}
-	}]],
+	},
+		{
+			field : 'Memo',
+			title : '备注',
+			width :60,
+			sortable : true,
+			editor:{
+				type:'textarea'
+			}
+		}]],
 	toolbar:[
 		{ text: '添加', iconCls: 'book-add', handler: function () {
              if (editRow != undefined) {
@@ -273,7 +282,7 @@ var pergrd=$('#personselectGrid').datagrid({
 			text: '删除', iconCls: 'book-delete', handler: function () {
 				var row = pergrd.datagrid('getSelections');
 				if (row.length > 0) {
-					for (var i = 0; i < row.length; i++) {
+					for (var i = row.length-1; i >=0; i--) {
 						var index = pergrd.datagrid('getRowIndex', row[i]);
 						pergrd.datagrid('deleteRow', index);
 					}

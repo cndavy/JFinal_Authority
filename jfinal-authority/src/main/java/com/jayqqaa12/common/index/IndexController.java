@@ -71,8 +71,9 @@ public class IndexController extends Controller
 		{
 			Subject subject = SecurityUtils.getSubject();
 			subject.logout();
-
-			renderTop(UrlConfig.LOGIN);
+			//getRequest().getAttribute("CONTEXT_PATH")
+			forwardAction("/jump");
+			//renderTop(UrlConfig.LOGIN);
 
 		} catch (AuthenticationException e)
 		{

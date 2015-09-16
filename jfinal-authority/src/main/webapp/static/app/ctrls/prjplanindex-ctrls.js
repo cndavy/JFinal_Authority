@@ -164,7 +164,16 @@ var pergrd=$('#personselectGrid').datagrid({
 		editor: {
 			type:'datebox'
 		}
-	}]],
+	},
+		{
+			field : 'Memo',
+			title : '备注',
+			width :60,
+			sortable : true,
+			editor:{
+				type:'textarea'
+			}
+		}]],
 	toolbar:[
 
 	],
