@@ -51,11 +51,11 @@
 	</div>
 </div>
 <div id="toolbar" style="display: none;">
-	<a ng-show="so_add" ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a> <a
-		ng-show="so_batchGrant"  ng-click="batchGrantFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'tux'">批量授权</a> <a
-		ng-show="so_batchDelete" ng-click="batchDeleteFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'delete'">批量删除</a>
-	<a ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">过滤条件</a> <a
-		ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清空条件</a>
+	<a ng-show="so_add" ng-click="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'pencil_add'">添加</a>
+	<a	ng-show="so_batchGrant"  ng-click="batchGrantFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'tux'">批量授权</a>
+	<a	ng-show="so_batchDelete" ng-click="batchDeleteFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'delete'">批量删除</a>
+	<a ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">过滤条件</a>
+	<a	ng-show="so_serach" href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清空条件</a>
 
 </div>
 
@@ -192,16 +192,18 @@
 var formatterFun = function(value, row, index) {
 		var str = '';
 
-@if( so.hasPermission("/system/user/edit")) 
+@if( so.hasPermission("/system/user/edit")) {
 		str += $.formatString('<img style="float:left;" onclick="$(this).scope().editFun(\'{0}\');" src="{1}" title="编辑"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/pencil.png');
-@if( so.hasPermission("/system/user/grant")) 
+@}if( so.hasPermission("/system/user/grant")) {
 		str += $.formatString('<img style="float:left;" onclick="$(this).scope().grant(\'{0}\');" src="{1}" title="授权"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/key.png');
-@if( so.hasPermission("/system/user/pwd")) 
+@}if( so.hasPermission("/system/user/pwd")) {
 		str += $.formatString('<img style="float:left;" onclick="$(this).scope().pwd(\'{0}\');" src="{1}" title="修改密码"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/key_add.png');
-@if( so.hasPermission("/system/user/freeze")) 
+@}if( so.hasPermission("/system/user/freeze")) {
 		str += $.formatString('<img style="float:left;" onclick="$(this).scope().freeze(\'{0}\',\'{1}\');" src="{2}" title="冻结"/>',row.id, row.status,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/lock/lock.png');
-@if( so.hasPermission("/system/user/delete")) 
+@}if( so.hasPermission("/system/user/delete")) {
 		str += $.formatString('<img style="float:left;" onclick="$(this).scope().deleteFun(\'{0}\');" src="{1}" title="删除"/>',row.id,'${CONTEXT_PATH}/static/js/ext/style/images/extjs_icons/cancel.png');
+@}
+
 @
 		return str + '';
 	}

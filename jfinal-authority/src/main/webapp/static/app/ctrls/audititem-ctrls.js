@@ -225,7 +225,7 @@ $scope.itemWriterFun=function(id) {
 			$.post(PATH + '/auditItem/GetItems',node,
 				function(data,textStatus) {
 					if (textStatus == 'success') {
-						$('#tbl_itemWriter').empty().append('<td><input name="auditItem.id" type="hidden"  /></td>');
+						$('#tbl_itemWriter').empty().append('<tr><td><input name="auditItem.id" type="hidden"  /></td></tr>');
 						showDialog('#dlg-itemWriter', "填写事项");
 						loadFrom('#fmdlgitemWriter', node);
 
@@ -244,12 +244,12 @@ $scope.itemWriterFun=function(id) {
 							+ '" multiple="true"   '
 							+ ' class="easyui-textbox" style="width:500px; " data-options="required:true" '
 								+ '" value="'
-								 +arrValue
+								/* +arrValue*/
 								 +'"'
 								 +' />'  )
 
-								 .append('<a href="javascript:void(0)"   >详细</a>');
-
+								 .append('<a href="javascript:void(0)"   >点击查看</a>');
+							  $('#tbl_itemWriter').find('[name="item.itemContent_' + arrNameId+'"]').val((arrValue));
 						}
 					}
 						$('#tbl_itemWriter a').each( function(i,element){
@@ -257,7 +257,7 @@ $scope.itemWriterFun=function(id) {
 							$(element).click(function(){
 								var v=$(element).prev().val();
 								$scope.current_detail=$(element).prev();
-								  KindEditor.html('#detail_note',v);
+								  KindEditor.html('#detail_note', (v));
 								 showDialog('#dlg-detail','编辑详情');
 							});
 						});
@@ -270,8 +270,8 @@ $scope.itemWriterFun=function(id) {
 	};
 $scope.detailFun=function(id){
 	$scope.detail_editor.sync();
-	var html = $scope.detail_editor.html();
-	$scope.current_detail.val(htmlencode(html));
+	var html = KindEditor('#detail_note').val();
+	$scope.current_detail.val((html));
 	$('#dlg-detail').dialog('close');
 }
 	$scope.itemWriterExport=function(id){
@@ -300,7 +300,9 @@ $scope.detailFun=function(id){
 		}
 
 	}
+	//填写事项 保存按钮
 $scope.saveItems=function() {
+	//
 			parent.$.messager.confirm('询问', '您是否要保存当前事项？', function (b) {
 				if (b) {
 					parent.$.messager.progress({
@@ -310,7 +312,14 @@ $scope.saveItems=function() {
 					});
 					$('#fmdlgitemWriter').form('submit', {
 						url: PATH + '/auditItem/itemWriter'
-						,
+						, onSubmit: function(){
+							//进行表单验证
+							$('#tbl_itemWriter input[name*="item.itemContent_"]').each(function(i,element){
+								$(element).val(htmlencode($(element).val()));
+								});
+							//如果返回false阻止提交
+							return true;
+						},
 						success: function (result) {
 							result = $.parseJSON(result);
 
@@ -444,12 +453,17 @@ $scope.addFun=function() {
 
 
 $scope.submit=function(){
-	$scope.editor.sync();
-	var html = KindEditor('#note').val();
-	//$("#note")[0].innerHtml=html;
-    $('input[name="auditItem.ItemDesc"]').val(htmlencode(html));;
+
     $("#fm").form('submit',{
-                url: url,
+		url: url,
+		onSubmit: function(){
+			//进行表单验证
+			$scope.editor.sync();
+			var html = KindEditor('#note').val();
+			$('input[name="auditItem.ItemDesc"]').val(htmlencode(html));;
+			//如果返回false阻止提交
+			return true;
+		},
                 success: function(result){
                  result= $.parseJSON(result);
                  if(result.code==200){

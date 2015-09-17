@@ -49,7 +49,7 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
                 if (key.split("_")[0].equals("item.itemContent")){
                     itemContent=paraMap.get(key);
                     for (int y=0;y<itemContent.length;y++){
-                    perMap.get(personId+","+y).set("ItemContents",itemContent[y]);
+                    perMap.get(personId+","+y).set("ItemContents",StringEscapeUtils.unescapeHtml(itemContent[y]));
                 }
 
 

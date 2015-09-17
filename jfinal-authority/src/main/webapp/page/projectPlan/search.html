@@ -32,13 +32,16 @@
                     </td>
 
                      <td>
-                         <a  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">查询</a>
-                         <a  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清除条件</a>
-                     </td>
+                         </td>
                 </tr>
 
             </table>
         </form>
+    </div>
+    <div id="toolbar" style="display: none;">
+        <a  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" ng-click="searchFun();">查询</a>
+        <a  href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" ng-click="cleanFun();">清除条件</a>
+
     </div>
     <div data-options="region:'center',border:false" style="height: auto">
         <table id="dataGrid" class="table table-hover table-condensed"></table>
