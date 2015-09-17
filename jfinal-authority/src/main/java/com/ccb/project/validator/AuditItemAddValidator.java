@@ -1,11 +1,10 @@
 package com.ccb.project.validator;
 
+import com.ccb.project.model.AuditItem;
 import com.jayqqaa12.jbase.jfinal.ext.Validator;
 import com.jfinal.core.Controller;
 
-/**
- * Created by han on 2015/9/6.
- */
+
 public class AuditItemAddValidator extends Validator {
     @Override
     protected void validate(Controller c) {
@@ -17,5 +16,8 @@ public class AuditItemAddValidator extends Validator {
         validateString("auditItem.ItemTitle", 1, 600, "标题不能超过600个字符");
         validateString("auditItem.ItemFieldLists", 1, 600, "标题列表不能超过600个字符");
         validateString("auditItem.ItemDesc", 0, 10000, "事项简介字符不能为空 或者太多了");
+    }
+    protected void handleError(Controller controller) {
+        controller.keepModel(AuditItem.class);
     }
 }

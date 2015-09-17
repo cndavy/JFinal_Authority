@@ -34,6 +34,11 @@
 			select a.*,u.des  from audititemlist a join system_user u on u.id=a.ItemRelaPersId
 			where   a.ItemId = ?  order by  a.ItemRelaPersId ,a.serialNum asc
 		</sql>
+		<sql id="updateAuditItemListMId">
+			update `audititemlist` set   `ItemContents` = ? ,
+			`serialId` = ?
+			where `ItemId` = ? and `ItemRelaPersId` = ? and  `serialNum` = ?
+		</sql>
 	</sqlGroup>
 	<sqlGroup name="todo">
 		<sql id="getToDO">

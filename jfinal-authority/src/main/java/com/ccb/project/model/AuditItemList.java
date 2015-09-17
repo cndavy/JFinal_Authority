@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by han on 2015/8/14.
  */
-@TableBind(tableName = "audititemlist")
+@TableBind(tableName = "audititemlist" )
 public class AuditItemList extends EasyuiModel<AuditItemList> {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); //设置时间格式
     private static final long serialVersionUID = 3706516534681611550L;
@@ -22,7 +22,7 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
     public static AuditItemList dao = new AuditItemList();
 
 
-    public void FilterItem(Map<String, String[]> paraMap,Integer itemId) {
+    public Map<String, AuditItemList> FilterItem(Map<String, String[]> paraMap, Integer itemId) {
         Map <String,AuditItemList>perMap=new HashMap<String,AuditItemList>();
 
         for (String key:paraMap.keySet()){
@@ -57,13 +57,11 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
 
             }
         }
-        for (AuditItemList c :perMap.values()){
-            AuditItemList.dao.deleteByMultId(c);
-            c.save();
-        }
+        return perMap;
+
     }
 
-    private void deleteByMultId(AuditItemList cell) {
+  /*  public void deleteByMultId(AuditItemList cell) {
     String sql=sql("auditItem.list.deleteByItemIdAndPersIdAndSerialNum");
         //cell.delete();
        Object[]ss= new Object[]{cell.get("ItemId").toString(),cell.get("ItemRelaPersId").toString(),
@@ -71,7 +69,7 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
 
         Db.batch(sql,new Object[][]{ss},1);
 
-    }
+    }*/
 
     public List<AuditItemList> itemWriteExport(Integer id) {
         String sql=sql("auditItem.list.selectAuditListByItemId");
@@ -83,5 +81,14 @@ public class AuditItemList extends EasyuiModel<AuditItemList> {
         String date=  sdf.format( Calendar.getInstance().getTime());
         String sql=sql("auditItem.todo.getToDO");
         return dao.find(sql,id,date);
+    }
+    public void updateItemListMId(AuditItemList cell){
+
+
+        String sql=sql("auditItem.list.updateAuditItemListMId");
+        Object[]ss= new Object[]{cell.get("ItemContents").toString(),cell.get("serialId").toString(),
+                cell.get("ItemId").toString(), cell.get("ItemRelaPersId").toString(), cell.get("serialNum").toString()};
+
+        Db.batch(sql,new Object[][]{ss},1);
     }
 }

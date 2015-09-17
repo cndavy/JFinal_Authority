@@ -330,6 +330,8 @@ $scope.saveItems=function() {
 								$.messager.alert('提示',result.msg);
 							}
 							parent.$.messager.progress('close');
+						},failure:function(result){
+							console.log(result);
 						}
 					});
 				}

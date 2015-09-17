@@ -110,6 +110,9 @@ public class MyConfig extends JFinalConfig
 		atbp.setDialect(new MysqlDialect());
 		if (isDev) atbp.setShowSql(true);
 		atbp.autoScan(false);
+		if (ConfigKit.getStr("TransactionLevel")!=null)
+		atbp.setTransactionLevel(ConfigKit.getInt("TransactionLevel"));
+		//atbp.addMapping("audititemlist", "ItemId, ItemRelaPersId, serialNum", AuditItemList.class);
 		me.add(atbp);
 		// sql记录
 		SqlReporter.setLogger(true);

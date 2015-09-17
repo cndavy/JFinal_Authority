@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @ControllerBind(controllerKey = "/auditItem", viewPath = UrlConfig.AUTDITITEM)
 public class AuditItemController extends EasyuiController<AuditItem>
@@ -28,6 +29,7 @@ public class AuditItemController extends EasyuiController<AuditItem>
   public void getToDo(){
 
 	  Integer id = ((User) ShiroExt.getSessionAttr(Consts.SESSION_USER)).getId();
+	 // setAttr("","");
 	  renderJson(AuditItemList.dao.getToDo(id));
   }
 
@@ -85,9 +87,13 @@ public class AuditItemController extends EasyuiController<AuditItem>
 	@Before(Tx.class)
 	public void itemWriter(){
 		Integer pid=getParaToInt("auditItem.id");
-		AuditItemList.dao.FilterItem(getParaMap(),pid);
+		Map<String, AuditItemList> perMap=	AuditItemList.dao.FilterItem(getParaMap(),pid);
+		for (AuditItemList c :perMap.values()){
+			AuditItemList.dao.updateItemListMId(c);
+
+		}
 		renderJsonResult(true);
-			//render("itemWriter.html");
+
 	}
 	@Before(value ={ AuditItemOwnerValidator.class})
 	public void itemWriterExport() throws UnsupportedEncodingException {
