@@ -198,7 +198,7 @@
 			str += $.formatString('<img   onclick="$(this).scope().itemWriterFun(\'{0}\')"  src="{1}" title="填写"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/notes/note_go.png');
 		@if( so.hasPermission("/auditItem/itemWriterExport"))
 			str += $.formatString('<img   onclick="$(this).scope().itemWriterExport(\'{0}\')"  src="{1}" title="导出"/>', row.id, PATH+'/static/js/ext/style/images/extjs_icons/table/table_save.png');
-	@
+	    @
 		 	 return str;
 }
 

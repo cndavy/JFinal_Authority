@@ -19,14 +19,20 @@
         <input  type="text" ng-show="false"   name="key"  ng-model="key"  >
 		<h1>Log In</h1>
 		<fieldset id="inputs">
-			<input required   type="text" placeholder="Username" ng-model="username"  ng-init="username= '${name!}'" autofocus required>
-			 <input  required type="password" placeholder="Password" ng-model="pwd"  value="" required>
+			<input required   type="text" placeholder="Username" ng-model="username"  ng-init="username= '${name!}'" autofocus  />
+			 <input  required type="password" placeholder="Password" ng-model="pwd"  value="" />
 		</fieldset>
 		<fieldset id="actions">
-			<input type="submit" class="button" ng-disabled="f.username.$invalid||f.pwd.$invalid"  ng-click="go()" value="Log in">
+			<input type="submit" class="button" ng-disabled="f.username.$invalid||f.pwd.$invalid"  ng-click="go()" value="Log in"/>
 			 <a href="#"  >{{msg}}</a> 
-			 <a href="/initDb">无法访问点这里</a>
+			<!-- <a href="/initDb">无法访问点这里</a>-->
 		</fieldset>
+
+		<!--	<input required   type="text" placeholder="Username" ng-model="username"  ng-init="username= '${name!}'" autofocus  />
+			<input  required type="password" placeholder="Password" ng-model="pwd"  value="" />
+			<input type="submit" class="button" ng-disabled="f.username.$invalid||f.pwd.$invalid"  ng-click="go()" value="Log in"/>
+			<a href="#"  >{{msg}}</a>
+-->
 	</form>
 </body>
 </html>

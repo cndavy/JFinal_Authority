@@ -1,5 +1,8 @@
 //window.name ="NG_DEFER_BOOTSTRAP!";
 //init =false;
+$.ready(function(){
+	alert("load");
+
 MainApp.controller('ContentCtrls', [ '$scope', function($scope) {
 	
     $scope.load=function(){
@@ -145,3 +148,6 @@ MainApp.controller('ContentCtrls', [ '$scope', function($scope) {
 	
 	
 } ]);
+
+
+});

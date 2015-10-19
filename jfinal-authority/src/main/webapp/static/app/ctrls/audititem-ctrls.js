@@ -249,9 +249,11 @@ $scope.itemWriterFun=function(id) {
 								 +' />'  )
 
 								 .append('<a href="javascript:void(0)"   >点击查看</a>');
-							  $('#tbl_itemWriter').find('[name="item.itemContent_' + arrNameId+'"]').val((arrValue));
+							  td_last.find('[name="item.itemContent_' + arrNameId+'"]').val(arrValue);
+							/*  td_last.find('[name="item.itemContent_' + arrNameId+'"]').attr('value',arrValue);*/
 						}
 					}
+
 						$('#tbl_itemWriter a').each( function(i,element){
 							$(element).linkbutton({plain:true});
 							$(element).click(function(){

@@ -89,7 +89,8 @@ public class AuditItemController extends EasyuiController<AuditItem>
 		Integer pid=getParaToInt("auditItem.id");
 		Map<String, AuditItemList> perMap=	AuditItemList.dao.FilterItem(getParaMap(),pid);
 		for (AuditItemList c :perMap.values()){
-			AuditItemList.dao.updateItemListMId(c);
+		   if(c.get("ItemContents")!=null)
+				AuditItemList.dao.updateItemListMId(c);
 
 		}
 		renderJsonResult(true);
